@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity"
+    android:gravity="center">
+
+<com.github.glomadrian.grav.GravView
+    android:id="@+id/grav"
+    android:scaleType="fitXY"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    app:colorGenerator="com.github.glomadrian.grav.generator.paint.ArrayColorGenerator"
+    app:array_colors="@array/Spectral"
+    app:pointGenerator="com.github.glomadrian.grav.generator.point.RegularPointGenerator"
+    app:regular_cell_size="100"
+    app:regular_variance="200"
+    app:gravGenerator="com.github.glomadrian.grav.generator.grav.BallGenerator"
+    app:ball_size="3dp"
+    app:animationGenerators="@array/BallWaveAnimations"
+    app:side_to_side_min_duration="2000"
+    app:side_to_side_max_duration="5000"
+    app:side_to_side_direction="downToUp"
+    app:shake_variance="50dp"
+    app:ball_size_from_size="3dp"
+    app:ball_size_to_size="6dp"
+    app:shake_direction="horizontal"
+    />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="HOLA PERRO"
+        android:gravity="center"
+        android:id="@+id/nombreUsuario"
+        android:layout_marginTop="190dp"
+        android:textSize="25sp"/>
+
+    <ImageView
+        android:layout_below="@+id/nombreUsuario"
+        android:id="@+id/logoadasdasd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logoquiz"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+    <LinearLayout
+        android:layout_below="@id/logoadasdasd"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Juego"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Opciones"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logoadasdasd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="10dp"
+        android:text="Puntajes"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/btnCerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logoadasdasd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:layout_marginBottom="10dp"
+        android:text="Cerrar Sesión"
+        android:textSize="15sp" />
+
+</RelativeLayout>
