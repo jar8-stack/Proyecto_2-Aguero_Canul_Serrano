@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_puntaje.*
 
 class PuntajeActivity : AppCompatActivity() {
 
+    private var db_values:Database = Database();
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_puntaje)
@@ -23,7 +25,7 @@ class PuntajeActivity : AppCompatActivity() {
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
-            "quizapp_1_7.db"
+            db_values.getName()
         ).allowMainThreadQueries().addCallback(object : RoomDatabase.Callback(){
 
         }).build()
