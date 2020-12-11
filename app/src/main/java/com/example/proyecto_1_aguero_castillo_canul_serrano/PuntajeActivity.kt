@@ -3,6 +3,8 @@ package com.example.proyecto_1_aguero_castillo_canul_serrano
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -12,42 +14,9 @@ import kotlinx.android.synthetic.main.activity_puntaje.*
 
 class PuntajeActivity : AppCompatActivity() {
 
-
-    //Hola mundo
-    private lateinit var primeroN: TextView
-    private lateinit var primeroS: TextView
-
-    private lateinit var segundoN: TextView
-    private lateinit var segundoS: TextView
-
-    private lateinit var terceroN: TextView
-    private lateinit var terceroS: TextView
-
-    private lateinit var cuartoN: TextView
-    private lateinit var cuartoS: TextView
-
-    private lateinit var quintoN: TextView
-    private lateinit var quintoS: TextView
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_puntaje)
-
-        primeroN= findViewById(R.id.primeroNombre)
-        primeroS= findViewById(R.id.primeroScore)
-
-        segundoN= findViewById(R.id.segundoNombre)
-        segundoS= findViewById(R.id.segundoScore)
-
-        terceroN= findViewById(R.id.terceroNombre)
-        terceroS= findViewById(R.id.terceroScore)
-
-        cuartoN= findViewById(R.id.cuartoNombre)
-        cuartoS= findViewById(R.id.cuartoScore)
-
-        quintoN= findViewById(R.id.quintoNombre)
-        quintoS= findViewById(R.id.quintoScore)
 
         Stetho.initializeWithDefaults(this)
 
@@ -62,23 +31,41 @@ class PuntajeActivity : AppCompatActivity() {
         var usuarios = db.userDao().getScore()
 
 
-        primeroN.setText(usuarios[0].score_usuario.toString())
-        primeroS.setText(usuarios[0].nombre_usuario.toString())
+        var dataNames= arrayListOf<String>()
+        var dataScores= arrayListOf<String>()
 
-        segundoN.setText(usuarios[1].score_usuario.toString())
-        segundoS.setText(usuarios[1].nombre_usuario.toString())
-
-        terceroN.setText(usuarios[2].score_usuario.toString())
-        terceroS.setText(usuarios[2].nombre_usuario.toString())
-
-        cuartoN.setText(usuarios[3].score_usuario.toString())
-        cuartoS.setText(usuarios[3].nombre_usuario.toString())
-
-        quintoN.setText(""+usuarios[4].score_usuario.toString())
-        quintoS.setText(usuarios[4].nombre_usuario.toString())
+        var long= usuarios.size-1
 
 
+        for(i in 0..long){
+            dataNames.add(usuarios[i].nombre_usuario)
+        }
 
+        for(j in 0..long){
+            dataScores.add(usuarios[j].score_usuario.toString())
+        }
+
+        var recyclerViewNames = findViewById<RecyclerView>(R.id.rvNames).apply {
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            setHasFixedSize(true)
+
+            // use a linear layout manager
+            layoutManager = LinearLayoutManager(this@PuntajeActivity)
+
+            // specify an viewAdapter (see also next example)
+            adapter = MyAdapter(dataNames)
+        }
+
+        var recyclerViewScores= findViewById<RecyclerView>(R.id.rvScores).apply {
+            setHasFixedSize(true)
+
+            // use a linear layout manager
+            layoutManager = LinearLayoutManager(this@PuntajeActivity)
+
+            // specify an viewAdapter (see also next example)
+            adapter = MyAdapter(dataScores)
+        }
 
 
     }

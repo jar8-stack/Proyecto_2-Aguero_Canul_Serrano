@@ -21,6 +21,6 @@ interface UserDao {
     @Insert
     fun insertUser(user: User)
 
-    @Query("SELECT * FROM usuario ORDER  BY score_usuario DESC LIMIT 0, 5")
+    @Query("SELECT * FROM usuario ORDER  BY score_usuario DESC")
     fun getScore(): List<User>
 }
