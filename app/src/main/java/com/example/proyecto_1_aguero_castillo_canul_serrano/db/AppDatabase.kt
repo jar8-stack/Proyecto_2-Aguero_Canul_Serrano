@@ -10,4 +10,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun configurationDao(): ConfigurationDao
     abstract fun ConfigurationThemesDAO(): ConfigurationThemesDAO
     abstract fun UserMatchesDao():UserMatchesDao
+    abstract fun ScorePerMatch(): score_per_match
 }
