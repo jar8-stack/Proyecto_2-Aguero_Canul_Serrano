@@ -17,29 +17,201 @@ class GameModel(application: Application) : AndroidViewModel(application) {
 
     private var artList= listOf<Theme>()
 
-    fun artListAdd(tema: Theme, respuestas: List<question_answers>, preguntas: List<Questions>, respuestaCorrecta: question_answers){
-        lateinit var plantillaOlo: ThemeQuestionDb
+    val db = Room.databaseBuilder(
+        application,
+        AppDatabase::class.java,
+        db_values.getName()
+    ).allowMainThreadQueries().addCallback(object : RoomDatabase.Callback(){
 
-        var longitudPreguntas= preguntas.size-1
+    }).build()
+
+    fun madeThis(){
+        // *************** ARTE ***********************
+        var dbThemeArt= db.themeDao().getThemeByName("Arte")
+        var questionsArt= db.questionDao().getQuestionsById(dbThemeArt.id)
+        var answerQuestionsPerQuestion= listOf<question_answers>()
+        lateinit var correctAnswer: question_answers
+
+        lateinit var oloDb: ThemeQuestionDb
         var listaRespuestas= arrayListOf<String>()
 
-        for(i in 0..longitudPreguntas){
-            plantillaOlo.category= tema.description
-            for(j in 0..respuestas.size){
-                listaRespuestas.add(respuestas[j].text)
+
+
+        for(i in 0..questionsArt.size-1){
+
+            answerQuestionsPerQuestion= db.questionAnswersDao().getQuestionAnswersById(questionsArt[i].id)
+            for(j in 0..answerQuestionsPerQuestion.size-1){
+                if(answerQuestionsPerQuestion[j].correct_answer){
+                    correctAnswer= answerQuestionsPerQuestion[j]
+                    break
+                }
             }
-            plantillaOlo.answers= listaRespuestas
 
-            plantillaOlo.correctanswer= respuestaCorrecta.text
+            for(j in 0..answerQuestionsPerQuestion.size-1){
+                listaRespuestas.add(answerQuestionsPerQuestion[j].text)
+            }
 
-            plantillaOlo.answered= false
+            oloDb= ThemeQuestionDb(questionsArt[i].text, listaRespuestas, correctAnswer.text, dbThemeArt.description, false)
 
-            plantillaOlo.questionString= preguntas[i].text
-
-
-            arte_questions.add(plantillaOlo)
+            arte_questions.add(oloDb)
         }
+
+        //*********************HISTORIA************************
+        var dbThemeHistory= db.themeDao().getThemeByName("Historia")
+        var questionsHistory= db.questionDao().getQuestionsById(dbThemeHistory.id)
+        var answerQuestionsPerQuestionH= listOf<question_answers>()
+        lateinit var correctAnswerH: question_answers
+
+        lateinit var oloDbH: ThemeQuestionDb
+        var listaRespuestasH= arrayListOf<String>()
+
+
+
+        for(i in 0..questionsHistory.size-1){
+
+            answerQuestionsPerQuestionH= db.questionAnswersDao().getQuestionAnswersById(questionsHistory[i].id)
+            for(j in 0..answerQuestionsPerQuestionH.size-1){
+                if(answerQuestionsPerQuestionH[j].correct_answer){
+                    correctAnswerH= answerQuestionsPerQuestionH[j]
+                    break
+                }
+            }
+
+            for(j in 0..answerQuestionsPerQuestionH.size-1){
+                listaRespuestasH.add(answerQuestionsPerQuestionH[j].text)
+            }
+
+            oloDbH= ThemeQuestionDb(questionsHistory[i].text, listaRespuestasH, correctAnswerH.text, dbThemeHistory.description, false)
+
+            history_questions.add(oloDbH)
+        }
+
+        //*************CIENCIA************
+        var dbThemeCiencia= db.themeDao().getThemeByName("Ciencia")
+        var questionsCiencia= db.questionDao().getQuestionsById(dbThemeCiencia.id)
+        var answerQuestionsPerQuestionC= listOf<question_answers>()
+        lateinit var correctAnswerC: question_answers
+
+        lateinit var oloDbC: ThemeQuestionDb
+        var listaRespuestasC= arrayListOf<String>()
+
+
+
+        for(i in 0..questionsCiencia.size-1){
+
+            answerQuestionsPerQuestionC= db.questionAnswersDao().getQuestionAnswersById(questionsCiencia[i].id)
+            for(j in 0..answerQuestionsPerQuestionC.size-1){
+                if(answerQuestionsPerQuestionC[j].correct_answer){
+                    correctAnswerC= answerQuestionsPerQuestionC[j]
+                    break
+                }
+            }
+
+            for(j in 0..answerQuestionsPerQuestionC.size-1){
+                listaRespuestasC.add(answerQuestionsPerQuestionC[j].text)
+            }
+
+            oloDbC= ThemeQuestionDb(questionsCiencia[i].text, listaRespuestasC, correctAnswerC.text, dbThemeCiencia.description, false)
+
+            ciencia_questions.add(oloDbC)
+        }
+
+        //***********PROGRAMACION*************
+        var dbThemeProgramacion= db.themeDao().getThemeByName("Programacion")
+        var questionsProgramacion= db.questionDao().getQuestionsById(dbThemeProgramacion.id)
+        var answerQuestionsPerQuestionP= listOf<question_answers>()
+        lateinit var correctAnswerP: question_answers
+
+        lateinit var oloDbP: ThemeQuestionDb
+        var listaRespuestasP= arrayListOf<String>()
+
+
+
+        for(i in 0..questionsProgramacion.size-1){
+
+            answerQuestionsPerQuestionP= db.questionAnswersDao().getQuestionAnswersById(questionsProgramacion[i].id)
+            for(j in 0..answerQuestionsPerQuestionP.size-1){
+                if(answerQuestionsPerQuestionP[j].correct_answer){
+                    correctAnswerP= answerQuestionsPerQuestionP[j]
+                    break
+                }
+            }
+
+            for(j in 0..answerQuestionsPerQuestionP.size-1){
+                listaRespuestasP.add(answerQuestionsPerQuestionP[j].text)
+            }
+
+            oloDbP= ThemeQuestionDb(questionsProgramacion[i].text, listaRespuestasP, correctAnswerP.text, dbThemeProgramacion.description, false)
+
+            programacion_questions.add(oloDbP)
+        }
+
+        //********CINE*************
+        var dbThemeCine= db.themeDao().getThemeByName("Cine")
+        var questionsCine= db.questionDao().getQuestionsById(dbThemeCine.id)
+        var answerQuestionsPerQuestionCine= listOf<question_answers>()
+        lateinit var correctAnswerCine: question_answers
+
+        lateinit var oloDbCine: ThemeQuestionDb
+        var listaRespuestasCine= arrayListOf<String>()
+
+
+
+        for(i in 0..questionsCine.size-1){
+
+            answerQuestionsPerQuestionCine= db.questionAnswersDao().getQuestionAnswersById(questionsCine[i].id)
+            for(j in 0..answerQuestionsPerQuestionCine.size-1){
+                if(answerQuestionsPerQuestionCine[j].correct_answer){
+                    correctAnswerCine= answerQuestionsPerQuestionCine[j]
+                    break
+                }
+            }
+
+            for(j in 0..answerQuestionsPerQuestionCine.size-1){
+                listaRespuestasCine.add(answerQuestionsPerQuestionCine[j].text)
+            }
+
+            oloDbCine= ThemeQuestionDb(questionsCine[i].text, listaRespuestasCine, correctAnswerCine.text, dbThemeCine.description, false)
+
+            cine_questions.add(oloDbCine)
+        }
+
+        //************CULTURA***********
+        var dbThemeCultura= db.themeDao().getThemeByName("Cultura General")
+        var questionsCultura= db.questionDao().getQuestionsById(dbThemeCultura.id)
+        var answerQuestionsPerQuestionCultura= listOf<question_answers>()
+        lateinit var correctAnswerCultura: question_answers
+
+        lateinit var oloDbCultura: ThemeQuestionDb
+        var listaRespuestasCultura= arrayListOf<String>()
+
+
+
+        for(i in 0..questionsCultura.size-1){
+
+            answerQuestionsPerQuestionCultura= db.questionAnswersDao().getQuestionAnswersById(questionsCultura[i].id)
+            for(j in 0..answerQuestionsPerQuestionCultura.size-1){
+                if(answerQuestionsPerQuestionCultura[j].correct_answer){
+                    correctAnswerCultura= answerQuestionsPerQuestionCultura[j]
+                    break
+                }
+            }
+
+            for(j in 0..answerQuestionsPerQuestionCultura.size-1){
+                listaRespuestasCultura.add(answerQuestionsPerQuestionCultura[j].text)
+            }
+
+            oloDbCultura= ThemeQuestionDb(questionsCultura[i].text, listaRespuestasCultura, correctAnswerCultura.text, dbThemeCultura.description, false)
+
+            culture_questions.add(oloDbCultura)
+        }
+
+
+
+
     }
+
+
 
     private var temaTodos = misPreferencias.getTemasTodos();
 
@@ -72,97 +244,40 @@ class GameModel(application: Application) : AndroidViewModel(application) {
 
     //Theme Questions
     private var arte_questions = arrayListOf<ThemeQuestionDb>(
-        /*
-        ThemeQuestion(R.string.question_Arte_1, listOf<Int>(R.string.r_question_Arte_1_1, R.string.r_question_Arte_1_2, R.string.r_question_Arte_1_3, R.string.r_question_Arte_1_4),R.string.r_question_Arte_1_2, "Arte",false),
-        ThemeQuestion(R.string.question_Arte_2, listOf<Int>(R.string.r_question_Arte_2_1, R.string.r_question_Arte_2_2, R.string.r_question_Arte_2_3, R.string.r_question_Arte_2_4),R.string.r_question_Arte_2_2, "Arte", false),
-        ThemeQuestion(R.string.question_Arte_3, listOf<Int>(R.string.r_question_Arte_3_1, R.string.r_question_Arte_3_2, R.string.r_question_Arte_3_3, R.string.r_question_Arte_3_4),R.string.r_question_Arte_3_2, "Arte", false),
-        ThemeQuestion(R.string.question_Arte_4, listOf<Int>(R.string.r_question_Arte_4_1, R.string.r_question_Arte_4_2, R.string.r_question_Arte_4_3, R.string.r_question_Arte_4_4),R.string.r_question_Arte_4_2, "Arte", false),
-        ThemeQuestion(R.string.question_Arte_5, listOf<Int>(R.string.r_question_Arte_5_1, R.string.r_question_Arte_5_2, R.string.r_question_Arte_5_3, R.string.r_question_Arte_5_4),R.string.r_question_Arte_5_2, "Arte", false),
-        ThemeQuestion(R.string.question_Arte_6, listOf<Int>(R.string.r_question_Arte_6_1, R.string.r_question_Arte_6_2, R.string.r_question_Arte_6_3, R.string.r_question_Arte_6_4),R.string.r_question_Arte_6_2, "Arte", false),
-        ThemeQuestion(R.string.question_Arte_7, listOf<Int>(R.string.r_question_Arte_7_1, R.string.r_question_Arte_7_2, R.string.r_question_Arte_7_3, R.string.r_question_Arte_7_4),R.string.r_question_Arte_7_2, "Arte", false),
-        ThemeQuestion(R.string.question_Arte_8, listOf<Int>(R.string.r_question_Arte_8_1, R.string.r_question_Arte_8_2, R.string.r_question_Arte_8_3, R.string.r_question_Arte_8_4),R.string.r_question_Arte_8_2, "Arte", false),
-        ThemeQuestion(R.string.question_Arte_9, listOf<Int>(R.string.r_question_Arte_9_1, R.string.r_question_Arte_9_2, R.string.r_question_Arte_9_3, R.string.r_question_Arte_9_4),R.string.r_question_Arte_9_2, "Arte", false),
-        ThemeQuestion(R.string.question_Arte_10,listOf<Int>(R.string.r_question_Arte_10_1, R.string.r_question_Arte_10_2, R.string.r_question_Arte_10_3, R.string.r_question_Arte_10_4),R.string.r_question_Arte_10_2, "Arte", false)
 
-         */
 
     )
 
     //Hola mundo
-    private val history_questions = listOf<ThemeQuestion>(
-        ThemeQuestion(R.string.question_Historia_1, listOf<Int>(R.string.r_question_Historia_1_1, R.string.r_question_Historia_1_2, R.string.r_question_Historia_1_3, R.string.r_question_Historia_1_4),R.string.r_question_Historia_1_2, "Historia", false),
-        ThemeQuestion(R.string.question_Historia_2, listOf<Int>(R.string.r_question_Historia_2_1, R.string.r_question_Historia_2_2, R.string.r_question_Historia_2_3, R.string.r_question_Historia_2_4),R.string.r_question_Historia_2_2, "Historia", false),
-        ThemeQuestion(R.string.question_Historia_3, listOf<Int>(R.string.r_question_Historia_3_1, R.string.r_question_Historia_3_2, R.string.r_question_Historia_3_3, R.string.r_question_Historia_3_4),R.string.r_question_Historia_3_2, "Historia", false),
-        ThemeQuestion(R.string.question_Historia_4, listOf<Int>(R.string.r_question_Historia_4_1, R.string.r_question_Historia_4_2, R.string.r_question_Historia_4_3, R.string.r_question_Historia_4_4),R.string.r_question_Historia_4_2, "Historia", false),
-        ThemeQuestion(R.string.question_Historia_5, listOf<Int>(R.string.r_question_Historia_5_1, R.string.r_question_Historia_5_2, R.string.r_question_Historia_5_3, R.string.r_question_Historia_5_4),R.string.r_question_Historia_5_2, "Historia", false),
-        ThemeQuestion(R.string.question_Historia_6, listOf<Int>(R.string.r_question_Historia_6_1, R.string.r_question_Historia_6_2, R.string.r_question_Historia_6_3, R.string.r_question_Historia_6_4),R.string.r_question_Historia_6_2, "Historia", false),
-        ThemeQuestion(R.string.question_Historia_7, listOf<Int>(R.string.r_question_Historia_7_1, R.string.r_question_Historia_7_2, R.string.r_question_Historia_7_3, R.string.r_question_Historia_7_4),R.string.r_question_Historia_7_2, "Historia", false),
-        ThemeQuestion(R.string.question_Historia_8, listOf<Int>(R.string.r_question_Historia_8_1, R.string.r_question_Historia_8_2, R.string.r_question_Historia_8_3, R.string.r_question_Historia_8_4),R.string.r_question_Historia_8_2, "Historia", false),
-        ThemeQuestion(R.string.question_Historia_9, listOf<Int>(R.string.r_question_Historia_9_1, R.string.r_question_Historia_9_2, R.string.r_question_Historia_9_3, R.string.r_question_Historia_9_4),R.string.r_question_Historia_9_2, "Historia", false),
-        ThemeQuestion(R.string.question_Historia_10,listOf<Int>(R.string.r_question_Historia_10_1, R.string.r_question_Historia_10_2, R.string.r_question_Historia_10_3, R.string.r_question_Historia_10_4),R.string.r_question_Historia_10_2, "Historia", false)
+    private val history_questions = arrayListOf<ThemeQuestionDb>(
+
     )
-    private val ciencia_questions = listOf<ThemeQuestion>(
-        ThemeQuestion(R.string.question_Ciencia_1, listOf<Int>(R.string.r_question_Ciencia_1_1, R.string.r_question_Ciencia_1_2, R.string.r_question_Ciencia_1_3, R.string.r_question_Ciencia_1_4),R.string.r_question_Ciencia_1_2, "Ciencia", false),
-        ThemeQuestion(R.string.question_Ciencia_2, listOf<Int>(R.string.r_question_Ciencia_2_1, R.string.r_question_Ciencia_2_2, R.string.r_question_Ciencia_2_3, R.string.r_question_Ciencia_2_4),R.string.r_question_Ciencia_2_2, "Ciencia", false),
-        ThemeQuestion(R.string.question_Ciencia_3, listOf<Int>(R.string.r_question_Ciencia_3_1, R.string.r_question_Ciencia_3_2, R.string.r_question_Ciencia_3_3, R.string.r_question_Ciencia_3_4),R.string.r_question_Ciencia_3_2, "Ciencia", false),
-        ThemeQuestion(R.string.question_Ciencia_4, listOf<Int>(R.string.r_question_Ciencia_4_1, R.string.r_question_Ciencia_4_2, R.string.r_question_Ciencia_4_3, R.string.r_question_Ciencia_4_4),R.string.r_question_Ciencia_4_2, "Ciencia", false),
-        ThemeQuestion(R.string.question_Ciencia_5, listOf<Int>(R.string.r_question_Ciencia_5_1, R.string.r_question_Ciencia_5_2, R.string.r_question_Ciencia_5_3, R.string.r_question_Ciencia_5_4),R.string.r_question_Ciencia_5_2, "Ciencia", false),
-        ThemeQuestion(R.string.question_Ciencia_6, listOf<Int>(R.string.r_question_Ciencia_6_1, R.string.r_question_Ciencia_6_2, R.string.r_question_Ciencia_6_3, R.string.r_question_Ciencia_6_4),R.string.r_question_Ciencia_6_2, "Ciencia", false),
-        ThemeQuestion(R.string.question_Ciencia_7, listOf<Int>(R.string.r_question_Ciencia_7_1, R.string.r_question_Ciencia_7_2, R.string.r_question_Ciencia_7_3, R.string.r_question_Ciencia_7_4),R.string.r_question_Ciencia_7_2, "Ciencia", false),
-        ThemeQuestion(R.string.question_Ciencia_8, listOf<Int>(R.string.r_question_Ciencia_8_1, R.string.r_question_Ciencia_8_2, R.string.r_question_Ciencia_8_3, R.string.r_question_Ciencia_8_4),R.string.r_question_Ciencia_8_2, "Ciencia", false),
-        ThemeQuestion(R.string.question_Ciencia_9, listOf<Int>(R.string.r_question_Ciencia_9_1, R.string.r_question_Ciencia_9_2, R.string.r_question_Ciencia_9_3, R.string.r_question_Ciencia_9_4),R.string.r_question_Ciencia_9_2, "Ciencia", false),
-        ThemeQuestion(R.string.question_Ciencia_10,listOf<Int>(R.string.r_question_Ciencia_10_1, R.string.r_question_Ciencia_10_2, R.string.r_question_Ciencia_10_3, R.string.r_question_Ciencia_10_4),R.string.r_question_Ciencia_10_2, "Ciencia", false)
+    private val ciencia_questions = arrayListOf<ThemeQuestionDb>(
+
     )
-    private val programacion_questions = listOf<ThemeQuestion>(
-        ThemeQuestion(R.string.question_Programación_1, listOf<Int>(R.string.r_question_Programación_1_1, R.string.r_question_Programación_1_2, R.string.r_question_Programación_1_3, R.string.r_question_Programación_1_4),R.string.r_question_Programación_1_2, "Programación", false),
-        ThemeQuestion(R.string.question_Programación_2, listOf<Int>(R.string.r_question_Programación_2_1, R.string.r_question_Programación_2_2, R.string.r_question_Programación_2_3, R.string.r_question_Programación_2_4),R.string.r_question_Programación_2_2, "Programación", false),
-        ThemeQuestion(R.string.question_Programación_3, listOf<Int>(R.string.r_question_Programación_3_1, R.string.r_question_Programación_3_2, R.string.r_question_Programación_3_3, R.string.r_question_Programación_3_4),R.string.r_question_Programación_3_2, "Programación", false),
-        ThemeQuestion(R.string.question_Programación_4, listOf<Int>(R.string.r_question_Programación_4_1, R.string.r_question_Programación_4_2, R.string.r_question_Programación_4_3, R.string.r_question_Programación_4_4),R.string.r_question_Programación_4_2, "Programación", false),
-        ThemeQuestion(R.string.question_Programación_5, listOf<Int>(R.string.r_question_Programación_5_1, R.string.r_question_Programación_5_2, R.string.r_question_Programación_5_3, R.string.r_question_Programación_5_4),R.string.r_question_Programación_5_2, "Programación", false),
-        ThemeQuestion(R.string.question_Programación_6, listOf<Int>(R.string.r_question_Programación_6_1, R.string.r_question_Programación_6_2, R.string.r_question_Programación_6_3, R.string.r_question_Programación_6_4),R.string.r_question_Programación_6_2, "Programación", false),
-        ThemeQuestion(R.string.question_Programación_7, listOf<Int>(R.string.r_question_Programación_7_1, R.string.r_question_Programación_7_2, R.string.r_question_Programación_7_3, R.string.r_question_Programación_7_4),R.string.r_question_Programación_7_2, "Programación", false),
-        ThemeQuestion(R.string.question_Programación_8, listOf<Int>(R.string.r_question_Programación_8_1, R.string.r_question_Programación_8_2, R.string.r_question_Programación_8_3, R.string.r_question_Programación_8_4),R.string.r_question_Programación_8_2, "Programación", false),
-        ThemeQuestion(R.string.question_Programación_9, listOf<Int>(R.string.r_question_Programación_9_1, R.string.r_question_Programación_9_2, R.string.r_question_Programación_9_3, R.string.r_question_Programación_9_4),R.string.r_question_Programación_9_2, "Programación", false),
-        ThemeQuestion(R.string.question_Programación_10,listOf<Int>(R.string.r_question_Programación_10_1, R.string.r_question_Programación_10_2, R.string.r_question_Programación_10_3, R.string.r_question_Programación_10_4),R.string.r_question_Programación_10_2, "Programación", false)
+    private val programacion_questions = arrayListOf<ThemeQuestionDb>(
+
     )
     //te
-    private val cine_questions = listOf<ThemeQuestion>(
-        ThemeQuestion(R.string.question_Cine_1, listOf<Int>(R.string.r_question_Cine_1_1, R.string.r_question_Cine_1_2, R.string.r_question_Cine_1_3, R.string.r_question_Cine_1_4),R.string.r_question_Cine_1_2, "Cine", false),
-        ThemeQuestion(R.string.question_Cine_2, listOf<Int>(R.string.r_question_Cine_2_1, R.string.r_question_Cine_2_2, R.string.r_question_Cine_2_3, R.string.r_question_Cine_2_4),R.string.r_question_Cine_2_2, "Cine", false),
-        ThemeQuestion(R.string.question_Cine_3, listOf<Int>(R.string.r_question_Cine_3_1, R.string.r_question_Cine_3_2, R.string.r_question_Cine_3_3, R.string.r_question_Cine_3_4),R.string.r_question_Cine_3_2, "Cine", false),
-        ThemeQuestion(R.string.question_Cine_4, listOf<Int>(R.string.r_question_Cine_4_1, R.string.r_question_Cine_4_2, R.string.r_question_Cine_4_3, R.string.r_question_Cine_4_4),R.string.r_question_Cine_4_2, "Cine", false),
-        ThemeQuestion(R.string.question_Cine_5, listOf<Int>(R.string.r_question_Cine_5_1, R.string.r_question_Cine_5_2, R.string.r_question_Cine_5_3, R.string.r_question_Cine_5_4),R.string.r_question_Cine_5_2, "Cine", false),
-        ThemeQuestion(R.string.question_Cine_6, listOf<Int>(R.string.r_question_Cine_6_1, R.string.r_question_Cine_6_2, R.string.r_question_Cine_6_3, R.string.r_question_Cine_6_4),R.string.r_question_Cine_6_2, "Cine", false),
-        ThemeQuestion(R.string.question_Cine_7, listOf<Int>(R.string.r_question_Cine_7_1, R.string.r_question_Cine_7_2, R.string.r_question_Cine_7_3, R.string.r_question_Cine_7_4),R.string.r_question_Cine_7_2, "Cine", false),
-        ThemeQuestion(R.string.question_Cine_8, listOf<Int>(R.string.r_question_Cine_8_1, R.string.r_question_Cine_8_2, R.string.r_question_Cine_8_3, R.string.r_question_Cine_8_4),R.string.r_question_Cine_8_2, "Cine", false),
-        ThemeQuestion(R.string.question_Cine_9, listOf<Int>(R.string.r_question_Cine_9_1, R.string.r_question_Cine_9_2, R.string.r_question_Cine_9_3, R.string.r_question_Cine_9_4),R.string.r_question_Cine_9_2, "Cine", false),
-        ThemeQuestion(R.string.question_Cine_10,listOf<Int>(R.string.r_question_Cine_10_1, R.string.r_question_Cine_10_2, R.string.r_question_Cine_10_3, R.string.r_question_Cine_10_4),R.string.r_question_Cine_10_2, "Cine", false)
+    private val cine_questions = arrayListOf<ThemeQuestionDb>(
+
     )
-    private val culture_questions = listOf<ThemeQuestion>(
-        ThemeQuestion(R.string.question_Cultura_1, listOf<Int>(R.string.r_question_Cultura_1_1, R.string.r_question_Cultura_1_2, R.string.r_question_Cultura_1_3, R.string.r_question_Cultura_1_4),R.string.r_question_Cultura_1_2, "Cultura", false),
-        ThemeQuestion(R.string.question_Cultura_2, listOf<Int>(R.string.r_question_Cultura_2_1, R.string.r_question_Cultura_2_2, R.string.r_question_Cultura_2_3, R.string.r_question_Cultura_2_4),R.string.r_question_Cultura_2_2, "Cultura", false),
-        ThemeQuestion(R.string.question_Cultura_3, listOf<Int>(R.string.r_question_Cultura_3_1, R.string.r_question_Cultura_3_2, R.string.r_question_Cultura_3_3, R.string.r_question_Cultura_3_4),R.string.r_question_Cultura_3_2, "Cultura", false),
-        ThemeQuestion(R.string.question_Cultura_4, listOf<Int>(R.string.r_question_Cultura_4_1, R.string.r_question_Cultura_4_2, R.string.r_question_Cultura_4_3, R.string.r_question_Cultura_4_4),R.string.r_question_Cultura_4_2, "Cultura", false),
-        ThemeQuestion(R.string.question_Cultura_5, listOf<Int>(R.string.r_question_Cultura_5_1, R.string.r_question_Cultura_5_2, R.string.r_question_Cultura_5_3, R.string.r_question_Cultura_5_4),R.string.r_question_Cultura_5_2, "Cultura", false),
-        ThemeQuestion(R.string.question_Cultura_6, listOf<Int>(R.string.r_question_Cultura_6_1, R.string.r_question_Cultura_6_2, R.string.r_question_Cultura_6_3, R.string.r_question_Cultura_6_4),R.string.r_question_Cultura_6_2, "Cultura", false),
-        ThemeQuestion(R.string.question_Cultura_7, listOf<Int>(R.string.r_question_Cultura_7_1, R.string.r_question_Cultura_7_2, R.string.r_question_Cultura_7_3, R.string.r_question_Cultura_7_4),R.string.r_question_Cultura_7_2, "Cultura", false),
-        ThemeQuestion(R.string.question_Cultura_8, listOf<Int>(R.string.r_question_Cultura_8_1, R.string.r_question_Cultura_8_2, R.string.r_question_Cultura_8_3, R.string.r_question_Cultura_8_4),R.string.r_question_Cultura_8_2, "Cultura", false),
-        ThemeQuestion(R.string.question_Cultura_9, listOf<Int>(R.string.r_question_Cultura_9_1, R.string.r_question_Cultura_9_2, R.string.r_question_Cultura_9_3, R.string.r_question_Cultura_9_4),R.string.r_question_Cultura_9_2, "Cultura", false),
-        ThemeQuestion(R.string.question_Cultura_10,listOf<Int>(R.string.r_question_Cultura_10_1, R.string.r_question_Cultura_10_2, R.string.r_question_Cultura_10_3, R.string.r_question_Cultura_10_4),R.string.r_question_Cultura_10_2, "Cultura", false)
+    private val culture_questions = arrayListOf<ThemeQuestionDb>(
+
     )
 
-    private val final_array2 = arrayListOf<ThemeQuestion>()
-    private var final_questions_toshow = arrayListOf<ThemeQuestion>()
+    private val final_array2 = arrayListOf<ThemeQuestionDb>()
+    private var final_questions_toshow = arrayListOf<ThemeQuestionDb>()
 
     fun showQuestions(){
-        var finalList= arrayListOf<ThemeQuestion>()
+        var finalList= arrayListOf<ThemeQuestionDb>()
         val listaOlo = arrayListOf<prueba>(
             prueba("Arte", 0),
             prueba("Ciencia", 0),
             prueba("Cine", 0),
             prueba("Historia", 0),
-            prueba("Programación", 0),
-            prueba("Cultura", 0)
+            prueba("Programacion", 0),
+            prueba("Cultura General", 0)
         )
         var listaOlo2= arrayListOf<prueba>()
 
@@ -180,13 +295,13 @@ class GameModel(application: Application) : AndroidViewModel(application) {
                 "Arte"->{
                     listaOlo.get(0).num+=1
                 }
-                "Programación"->{
+                "Programacion"->{
                     listaOlo.get(4).num+=1
                 }
                 "Cine"->{
                     listaOlo.get(2).num+=1
                 }
-                "Cultura"->{
+                "Cultura General"->{
                     listaOlo.get(5).num+=1
                 }
             }
@@ -282,7 +397,7 @@ class GameModel(application: Application) : AndroidViewModel(application) {
     }
 
     var randoms = arrayListOf<Int>()
-    fun chooseQuestions(questions:List<ThemeQuestion>, count:Int)
+    fun chooseQuestions(questions:List<ThemeQuestionDb>, count:Int)
     {
 
         for (i in 0 until count)
@@ -329,12 +444,12 @@ class GameModel(application: Application) : AndroidViewModel(application) {
         return res
     }
 
-    fun getQuestionsToShow():List<ThemeQuestion>{ return final_questions_toshow}
+    fun getQuestionsToShow():List<ThemeQuestionDb>{ return final_questions_toshow}
 
     //view
     fun numOfQuestions(): Int { return numeroPreguntas }
     fun currentQuestionNum(): Int { return currentQuestion }
-    fun currentQuestionObj(): ThemeQuestion { return final_questions_toshow[currentQuestion] }
+    fun currentQuestionObj(): ThemeQuestionDb { return final_questions_toshow[currentQuestion] }
 
     fun correctQuestions(): Float { return correctQuestions }
     fun increaseCorrectQuestions()

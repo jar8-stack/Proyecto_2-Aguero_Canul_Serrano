@@ -135,7 +135,7 @@ class SelectPlayerActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            val gameModelSetter: GameModel
+
 
         }
     }

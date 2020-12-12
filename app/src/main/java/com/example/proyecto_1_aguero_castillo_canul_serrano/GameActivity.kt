@@ -13,6 +13,7 @@ import androidx.core.view.size
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.proyecto_1_aguero_castillo_canul_serrano.db.AppDatabase
+import com.example.proyecto_1_aguero_castillo_canul_serrano.db.question_answers
 import kotlin.random.Random
 
 class GameActivity : AppCompatActivity() {
@@ -34,6 +35,7 @@ class GameActivity : AppCompatActivity() {
 
     private val model : GameModel by viewModels()
     private val dbValues:Database = Database()
+
 
     override fun onBackPressed() {
         val db = Room.databaseBuilder(
@@ -71,6 +73,19 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        //********************Llenar las preguntas*******************
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            dbValues.getName()
+        ).allowMainThreadQueries().addCallback(object : RoomDatabase.Callback(){
+
+        }).build()
+
+        model.madeThis()
+
+        //**********************Llenar las preguntas******************
+
         questionCount = findViewById(R.id.questionCount)
         questionsAnswered = findViewById(R.id.questionsAnswered)
         questionTextView = findViewById(R.id.question_text)
@@ -93,7 +108,7 @@ class GameActivity : AppCompatActivity() {
             btnPista.text= "Pistas:"+model.getNumPistas().toString()
         }
 
-        questionTextView.setText(model.currentQuestionObj().strResId)
+        questionTextView.setText(model.currentQuestionObj().questionString)
         questionCount.setText((model.currentQuestionNum()+1).toString()+"/"+model.numOfQuestions())
         questionsAnswered.setText(" : "+model.answeredQuestions())
 
@@ -112,7 +127,7 @@ class GameActivity : AppCompatActivity() {
         //next button
         nextButton.setOnClickListener{view: View ->
             model.nextQuestion()
-            questionTextView.setText(model.currentQuestionObj().strResId)
+            questionTextView.setText(model.currentQuestionObj().questionString)
             questionCount.setText((model.currentQuestionNum()+1).toString()+"/"+model.numOfQuestions())
 
             asignedAnswers()
@@ -123,7 +138,7 @@ class GameActivity : AppCompatActivity() {
         previousButton.setOnClickListener{view:View ->
             model.previousQuestion()
             if(model.currentQuestionNum() == -1) model.updateCurrentQuestion(model.numOfQuestions()-1)
-            questionTextView.setText(model.currentQuestionObj().strResId)
+            questionTextView.setText(model.currentQuestionObj().questionString)
             questionCount.setText((model.currentQuestionNum()+1).toString()+"/"+model.numOfQuestions())
 
             asignedAnswers()
@@ -137,7 +152,7 @@ class GameActivity : AppCompatActivity() {
 
                 var correctAnswer= model.getQuestionsToShow().get(model.currentQuestionNum()).correctanswer
 
-                var correctAnswerString: String = getString(correctAnswer)
+                var correctAnswerString: String = correctAnswer
 
                 var listaFinal= arrayListOf<String>()
 
@@ -186,7 +201,7 @@ class GameActivity : AppCompatActivity() {
 
                 var correctAnswer= model.getQuestionsToShow().get(model.currentQuestionNum()).correctanswer
 
-                var correctAnswerString: String = getString(correctAnswer)
+                var correctAnswerString: String = correctAnswer
 
                 if(!model.currentQuestionObj().answered)
                 {
@@ -257,7 +272,7 @@ class GameActivity : AppCompatActivity() {
 
         var correctAnswer= model.getQuestionsToShow().get(model.currentQuestionNum()).correctanswer
 
-        var correctAnswerString: String = getString(correctAnswer)
+        var correctAnswerString: String = correctAnswer
 
         listRes.add(correctAnswerString)
 
@@ -270,7 +285,7 @@ class GameActivity : AppCompatActivity() {
                 while(listRes.size < 2){
                     for(element in reqId){
                         cont2++
-                        var string: String = getString(element)
+                        var string: String = element
 
                         if(string == correctAnswerString){
                             contSave= cont2-1
@@ -291,7 +306,7 @@ class GameActivity : AppCompatActivity() {
                 while(listRes.size < 3) {
                     for (element in reqId) {
                         cont2++
-                        var string: String = getString(element)
+                        var string: String = element
 
                         if (string == correctAnswerString) {
                             contSave= cont2-1
@@ -312,7 +327,7 @@ class GameActivity : AppCompatActivity() {
                 while(listRes.size < 4) {
                     for (element in reqId) {
                         cont2++
-                        var string: String = getString(element)
+                        var string: String = element
 
                         if (string == correctAnswerString) {
                             contSave= cont2-1
