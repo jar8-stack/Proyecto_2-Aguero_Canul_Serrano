@@ -2,11 +2,44 @@ package com.example.proyecto_1_aguero_castillo_canul_serrano
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.proyecto_1_aguero_castillo_canul_serrano.Preferences.MyPreferences
+import com.example.proyecto_1_aguero_castillo_canul_serrano.db.AppDatabase
+import com.example.proyecto_1_aguero_castillo_canul_serrano.db.Questions
+import com.example.proyecto_1_aguero_castillo_canul_serrano.db.Theme
+import com.example.proyecto_1_aguero_castillo_canul_serrano.db.question_answers
 
 class GameModel(application: Application) : AndroidViewModel(application) {
-
+    private var db_values:Database = Database()
     val misPreferencias = MyPreferences(getApplication())
+
+    private var artList= listOf<Theme>()
+
+    fun artListAdd(tema: Theme, respuestas: List<question_answers>, preguntas: List<Questions>, respuestaCorrecta: question_answers){
+        lateinit var plantillaOlo: ThemeQuestionDb
+
+        var longitudPreguntas= preguntas.size-1
+        var listaRespuestas= arrayListOf<String>()
+
+        for(i in 0..longitudPreguntas){
+            plantillaOlo.category= tema.description
+            for(j in 0..respuestas.size){
+                listaRespuestas.add(respuestas[j].text)
+            }
+            plantillaOlo.answers= listaRespuestas
+
+            plantillaOlo.correctanswer= respuestaCorrecta.text
+
+            plantillaOlo.answered= false
+
+            plantillaOlo.questionString= preguntas[i].text
+
+
+            arte_questions.add(plantillaOlo)
+        }
+    }
 
     private var temaTodos = misPreferencias.getTemasTodos();
 
@@ -38,7 +71,8 @@ class GameModel(application: Application) : AndroidViewModel(application) {
     )
 
     //Theme Questions
-    private val arte_questions = listOf<ThemeQuestion>(
+    private var arte_questions = arrayListOf<ThemeQuestionDb>(
+        /*
         ThemeQuestion(R.string.question_Arte_1, listOf<Int>(R.string.r_question_Arte_1_1, R.string.r_question_Arte_1_2, R.string.r_question_Arte_1_3, R.string.r_question_Arte_1_4),R.string.r_question_Arte_1_2, "Arte",false),
         ThemeQuestion(R.string.question_Arte_2, listOf<Int>(R.string.r_question_Arte_2_1, R.string.r_question_Arte_2_2, R.string.r_question_Arte_2_3, R.string.r_question_Arte_2_4),R.string.r_question_Arte_2_2, "Arte", false),
         ThemeQuestion(R.string.question_Arte_3, listOf<Int>(R.string.r_question_Arte_3_1, R.string.r_question_Arte_3_2, R.string.r_question_Arte_3_3, R.string.r_question_Arte_3_4),R.string.r_question_Arte_3_2, "Arte", false),
@@ -49,6 +83,9 @@ class GameModel(application: Application) : AndroidViewModel(application) {
         ThemeQuestion(R.string.question_Arte_8, listOf<Int>(R.string.r_question_Arte_8_1, R.string.r_question_Arte_8_2, R.string.r_question_Arte_8_3, R.string.r_question_Arte_8_4),R.string.r_question_Arte_8_2, "Arte", false),
         ThemeQuestion(R.string.question_Arte_9, listOf<Int>(R.string.r_question_Arte_9_1, R.string.r_question_Arte_9_2, R.string.r_question_Arte_9_3, R.string.r_question_Arte_9_4),R.string.r_question_Arte_9_2, "Arte", false),
         ThemeQuestion(R.string.question_Arte_10,listOf<Int>(R.string.r_question_Arte_10_1, R.string.r_question_Arte_10_2, R.string.r_question_Arte_10_3, R.string.r_question_Arte_10_4),R.string.r_question_Arte_10_2, "Arte", false)
+
+         */
+
     )
 
     //Hola mundo

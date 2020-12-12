@@ -19,7 +19,7 @@ import java.io.Console
 class SelectPlayerActivity : AppCompatActivity() {
 
     private var arrayAdapter: ArrayAdapter<String>? = null
-    private var db_values:Database = Database();
+    private var db_values:Database = Database()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,6 +134,9 @@ class SelectPlayerActivity : AppCompatActivity() {
                 val intent: Intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
+
+            val gameModelSetter: GameModel
+
         }
     }
 
