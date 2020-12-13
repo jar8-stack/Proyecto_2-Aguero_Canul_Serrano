@@ -95,12 +95,13 @@ class SelectPlayerActivity : AppCompatActivity() {
                         themes.forEach {
                             println(it.id)
                             Log.d("CONFIGURATION_THEME",""+it.id);
-                            db.ConfigurationThemesDAO().insertConfigurationTheme(id_configuracion,it.id)
+                            db.ConfigurationThemesDAO().insertConfigurationTheme(id_configuracion,it.id,true)
                         }
 
                         misPreferencias.setLogeado(true)
                         misPreferencias.setNombreUsuario(nombreUsuario.text.toString())
                         misPreferencias.setIdUsuario(""+id_usuario);
+                        misPreferencias.setIdConfiguracion(id_configuracion)
 
                         Toast.makeText(
                             this,

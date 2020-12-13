@@ -20,8 +20,19 @@ class MyPreferences(context: Context) {
     val PREFERENCES_NOMBRE_USUARIO = "SharedPreferencesNombreUsuario"
     val PREFERENCES_ID_USUARIO = "SharedPreferencesIdUsuario"
     val PREFERENCES_LOGEADO = "SharedPreferencesLogeado"
+    val PREFERENCES_ID_CONFIGURACION = "SharedPreferencesIdConfiguracion"
 
     val preferences = context.getSharedPreferences(PREFERENCES_NAME,Context.MODE_PRIVATE)
+
+    fun getIdConfiguracion() : Int{
+        return preferences.getInt(PREFERENCES_ID_CONFIGURACION, 0)
+    }
+
+    fun setIdConfiguracion(IdConfiguracion : Int){
+        val editor = preferences.edit()
+        editor.putInt(PREFERENCES_ID_CONFIGURACION, IdConfiguracion)
+        editor.apply()
+    }
 
     fun getLogeado() : Boolean{
         return preferences.getBoolean(PREFERENCES_LOGEADO, false)

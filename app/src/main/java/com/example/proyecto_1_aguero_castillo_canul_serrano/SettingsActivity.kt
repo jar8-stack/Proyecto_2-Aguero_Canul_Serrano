@@ -6,9 +6,20 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.CheckBox
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.proyecto_1_aguero_castillo_canul_serrano.Preferences.MyPreferences
+import com.example.proyecto_1_aguero_castillo_canul_serrano.R
+import com.example.proyecto_1_aguero_castillo_canul_serrano.db.AppDatabase
+import com.facebook.stetho.Stetho
 import kotlinx.android.synthetic.main.activity_settings.*
+import kotlin.random.Random
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -17,6 +28,10 @@ class SettingsActivity : AppCompatActivity() {
     var cantidadPistas = ""
 
     var temasActivados = 1
+
+    private var db_values:Database = Database()
+
+    private var flavorCheckBoxes = mutableListOf<CheckBox>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,11 +42,65 @@ class SettingsActivity : AppCompatActivity() {
         val misCantidadDePreguntas = arrayOf("5", "6", "7", "8", "9", "10")
         val cantidadDePistas = arrayOf("1","2","3")
 
+        flavorCheckBoxes.addAll(
+            arrayOf(
+                findViewById(R.id.vcbarte),
+                findViewById(R.id.vcbciencai),
+                findViewById(R.id.vcbcine),
+                findViewById(R.id.vcbhistoria),
+                findViewById(R.id.vcbprogramacion),
+                findViewById(R.id.vcbcultura),
+            )
+        )
+
+        Stetho.initializeWithDefaults(this)
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            db_values.getName()
+        ).allowMainThreadQueries().addCallback(object : RoomDatabase.Callback(){}).build()
+
         vspnopreguntas.setAdapter( ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, misCantidadDePreguntas))
         vspnopistas.setAdapter( ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cantidadDePistas))
 
-        vspnopreguntas.setSelection((vspnopreguntas.getAdapter() as ArrayAdapter<String?>).getPosition("" + misPreferencias.getCantidadPreguntas()))
-        vspnopistas.setSelection((vspnopistas.getAdapter() as ArrayAdapter<String?>).getPosition("" + misPreferencias.getCantidadPistas()))
+        // TRAER EL ID CONFIGURACION DE LA BASE DE DATOS
+        var idConfiguracion = misPreferencias.getIdConfiguracion();
+
+        // TRAER LA CANTIDAD DE PREGUNTAS DE LA BASE DE DATOS
+        var cantidadPreguntasDB = db.configurationDao().traerNumeroDePreguntas(idConfiguracion);
+
+        // TRAER LA CANTIDAD DE PISTAS DE LA BASE DE DATOS
+        var cantidadPistasDB = db.configurationDao().traerNumeroPistas(idConfiguracion);
+
+        // TRAER EL NIVEL DE DIFICULTAD DE LA BASE DE DATOS
+        var nivelDificultad = db.configurationDao().traerNivelDificultad(idConfiguracion);
+
+        // TRAER SI LAS PISTAS ESTAN ACTIVADAS PARA LA CONFIGURACION DE ESTE USUARIO
+        var pistasActivas = db.configurationDao().getPistasActivas(idConfiguracion);
+
+        //TRAER LOS STATUS DE CADA TEMA
+        var statusArte = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Arte"));
+        var statusCiencia = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Ciencia"));
+        var statusCine = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Cine"));
+        var statusHistoria = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Historia"));
+        var statusProgramacion = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Programacion"));
+        var statusCultura = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Cultura General"));
+
+        cbtodos.isChecked = statusArte && statusCiencia && statusCine && statusHistoria && statusProgramacion && statusCultura
+
+        vcbarte.isChecked = statusArte
+        vcbciencai.isChecked = statusCiencia
+        vcbcine.isChecked =statusCine
+        vcbhistoria.isChecked =statusHistoria
+        vcbprogramacion.isChecked =statusProgramacion
+        vcbcultura.isChecked =statusCultura
+
+                // SETEAR ESA CANTIDAD DE PREGUNTAS AL SELECT DE PREGUNTAS
+        vspnopreguntas.setSelection((vspnopreguntas.getAdapter() as ArrayAdapter<String?>).getPosition("" + cantidadPreguntasDB))
+
+        // SETEAR LA CANTIDAD DE PISTAS AL SELECT DE PISTAS
+        vspnopistas.setSelection((vspnopistas.getAdapter() as ArrayAdapter<String?>).getPosition("" + cantidadPistasDB))
 
         vspnopreguntas.setOnItemSelectedListener(object : OnItemSelectedListener {
             override fun onItemSelected(
@@ -40,14 +109,7 @@ class SettingsActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                /*
 
-
-                Toast.makeText(
-                    adapterView.context,
-                    "Selecciono " + adapterView.getItemAtPosition(position) as String + " preguntas por juego",
-                    Toast.LENGTH_SHORT
-                ).show()*/
                 cantidadPreguntas = adapterView.getItemAtPosition(position) as String
             }
 
@@ -63,14 +125,7 @@ class SettingsActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                /*
 
-
-                Toast.makeText(
-                    adapterView.context,
-                    "Selecciono " + adapterView.getItemAtPosition(position) as String + " pistas por juego",
-                    Toast.LENGTH_SHORT
-                ).show()*/
                 cantidadPistas = adapterView.getItemAtPosition(position) as String
             }
 
@@ -79,22 +134,17 @@ class SettingsActivity : AppCompatActivity() {
             }
         })
 
-        vcbarte.isChecked = misPreferencias.getTemaArte()
-        vcbciencai.isChecked = misPreferencias.getTemaCiencia()
-        vcbcine.isChecked = misPreferencias.getTemaCine()
-        vcbhistoria.isChecked = misPreferencias.getTemaHistoria()
-        vcbprogramacion.isChecked = misPreferencias.getTemaProgramacion()
-        vcbcultura.isChecked = misPreferencias.getTemaCultura()
-
-        if(misPreferencias.getNivelEstablecido() == 0){ //FACIL
+        // SETEAMOS NUESTRA DIFICULTAD AL DE NUESTRA BASE DE DATOS
+        if(nivelDificultad == "F"){ //FACIL
             rbtnFacil.isChecked = true
-        }else if(misPreferencias.getNivelEstablecido() == 1){ //MEDIO
+        }else if(nivelDificultad == "M"){ //MEDIO
             rbtnMedio.isChecked = true
-        }else if(misPreferencias.getNivelEstablecido() == 2){ //DIFICIL
+        }else if(nivelDificultad == "D"){ //DIFICIL
             rbtnDificil.isChecked = true
         }
 
-        if(misPreferencias.getPistasActivas()){
+        // SETEAMOS NUESTRAS PISTAS SI ESTAN ACTIVAS
+        if(pistasActivas){
             vtbpistas.isChecked = true
             txvNoPistas.visibility = View.VISIBLE
             vspnopistas.visibility = View.VISIBLE
@@ -118,139 +168,65 @@ class SettingsActivity : AppCompatActivity() {
 
         btnGuardarPreferencias.setOnClickListener { view ->
 
-            misPreferencias.setCantidadPreguntas(cantidadPreguntas.toInt())
-
-            misPreferencias.setCantidadPistas(cantidadPistas.toInt())
+            var dificultad = ""
 
             if(rbtnFacil.isChecked){
-                misPreferencias.setNivelEstablecido(0)
+                dificultad = "F"
             }else if(rbtnMedio.isChecked){
-                misPreferencias.setNivelEstablecido(1)
+                dificultad = "M"
             }else if(rbtnDificil.isChecked){
-                misPreferencias.setNivelEstablecido(2)
+                dificultad = "D"
             }
 
-            misPreferencias.setPistasActivas(vtbpistas.isChecked)
+            db.configurationDao().actualizarConfiguracion(cantidadPreguntas.toInt(),dificultad,cantidadPistas.toInt(),vtbpistas.isChecked,idConfiguracion);
 
-            misPreferencias.setTemaArte(vcbarte.isChecked)
-            misPreferencias.setTemaCiencia(vcbciencai.isChecked)
-            misPreferencias.setTemaCine(vcbcine.isChecked)
-            misPreferencias.setTemaHistoria(vcbhistoria.isChecked)
-            misPreferencias.setTemaProgramacion(vcbprogramacion.isChecked)
-            misPreferencias.setTemaCultura(vcbcultura.isChecked)
+            db.ConfigurationThemesDAO().actualizarStatusTema(db.themeDao().getThemeId("Arte"),idConfiguracion,vcbarte.isChecked)
+            db.ConfigurationThemesDAO().actualizarStatusTema(db.themeDao().getThemeId("Ciencia"),idConfiguracion,vcbciencai.isChecked)
+            db.ConfigurationThemesDAO().actualizarStatusTema(db.themeDao().getThemeId("Cine"),idConfiguracion,vcbcine.isChecked)
+            db.ConfigurationThemesDAO().actualizarStatusTema(db.themeDao().getThemeId("Historia"),idConfiguracion,vcbhistoria.isChecked)
+            db.ConfigurationThemesDAO().actualizarStatusTema(db.themeDao().getThemeId("Programacion"),idConfiguracion,vcbprogramacion.isChecked)
+            db.ConfigurationThemesDAO().actualizarStatusTema(db.themeDao().getThemeId("Cultura General"),idConfiguracion,vcbcultura.isChecked)
         }
 
-        vswtodos.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                vcbarte.isChecked = true
-                vcbciencai.isChecked = true
-                vcbcine.isChecked = true
-                vcbhistoria.isChecked = true
-                vcbprogramacion.isChecked = true
-                vcbcultura.isChecked = true
-            }
-        }
-
-        vcbarte.setOnCheckedChangeListener{ _, isChecked ->
-            if(isChecked){
-                temasActivados++
-                Log.d("TEMASACTIVADOS",""+temasActivados)
+        cbtodos.setOnClickListener{ v ->
+            if(cbtodos.isChecked){
+                flavorCheckBoxes.forEach{ chk ->
+                    chk.isChecked = true;
+                }
             }else{
-                temasActivados--
-                vswtodos.isChecked = false
-                Log.d("TEMASACTIVADOS",""+temasActivados)
+                flavorCheckBoxes.forEach{ chk ->
+                    chk.isChecked = false;
+                }
+                flavorCheckBoxes[rand(0,5)].isChecked = true;
             }
+        }
+    }
 
-            if(temasActivados == 6){
-                vswtodos.isChecked = true
-            }else if(temasActivados == 0){
-                vcbarte.isActivated = false
+    fun validarTemas(view: View) {
+        val flavorToShow = mutableListOf<String>()
+        flavorCheckBoxes.forEach{ chk ->
+            if(chk.isChecked){
+                flavorToShow.add(chk.text.toString())
             }
         }
 
-        vcbciencai.setOnCheckedChangeListener{ _, isChecked ->
-            if(isChecked){
-                temasActivados++
-                Log.d("TEMASACTIVADOS",""+temasActivados)
-            }else{
-                temasActivados--
-                vswtodos.isChecked = false
-                Log.d("TEMASACTIVADOS",""+temasActivados)
-            }
-
-            if(temasActivados == 6){
-                vswtodos.isChecked = true
-            }else if(temasActivados == 0){
-                vcbciencai.isActivated = false
-            }
+        if(flavorToShow.count() > 5){
+            cbtodos.isChecked = true
         }
 
-        vcbcine.setOnCheckedChangeListener{ _, isChecked ->
-            if(isChecked){
-                temasActivados++
-                Log.d("TEMASACTIVADOS",""+temasActivados)
-            }else{
-                temasActivados--
-                vswtodos.isChecked = false
-                Log.d("TEMASACTIVADOS",""+temasActivados)
-            }
-
-            if(temasActivados == 6){
-                vswtodos.isChecked = true
-            }else if(temasActivados == 0){
-                vcbcine.isActivated = false
-            }
+        if(flavorToShow.count() < 6){
+            cbtodos.isChecked = false
         }
 
-        vcbhistoria.setOnCheckedChangeListener{ _, isChecked ->
-            if(isChecked){
-                temasActivados++
-                Log.d("TEMASACTIVADOS",""+temasActivados)
-            }else{
-                temasActivados--
-                vswtodos.isChecked = false
-                Log.d("TEMASACTIVADOS",""+temasActivados)
-            }
-
-            if(temasActivados == 6){
-                vswtodos.isChecked = true
-            }else if(temasActivados == 0){
-                vcbhistoria.isActivated = false
-            }
+        if(flavorToShow.count() < 1){
+            flavorCheckBoxes[rand(0,5)].isChecked = true;
         }
 
-        vcbprogramacion.setOnCheckedChangeListener{ _, isChecked ->
-            if(isChecked){
-                temasActivados++
-                Log.d("TEMASACTIVADOS",""+temasActivados)
-            }else{
-                temasActivados--
-                vswtodos.isChecked = false
-                Log.d("TEMASACTIVADOS",""+temasActivados)
-            }
+        Log.d("CHEK",flavorToShow.joinToString())
+    }
 
-            if(temasActivados == 6){
-                vswtodos.isChecked = true
-            }else if(temasActivados == 0){
-                vcbprogramacion.isActivated = false
-            }
-        }
-
-        vcbcultura.setOnCheckedChangeListener{ _, isChecked ->
-            if(isChecked){
-                temasActivados++
-                Log.d("TEMASACTIVADOS",""+temasActivados)
-            }else{
-                temasActivados--
-                vswtodos.isChecked = false
-                Log.d("TEMASACTIVADOS",""+temasActivados)
-            }
-
-            if(temasActivados == 6){
-                vswtodos.isChecked = true
-            }else if(temasActivados == 0){
-                vcbcultura.isActivated = false
-            }
-        }
+    fun rand(start: Int, end: Int): Int {
+        require(!(start > end || end - start + 1 > Int.MAX_VALUE)) { "Illegal Argument" }
+        return Random(System.nanoTime()).nextInt(end - start + 1) + start
     }
 }
