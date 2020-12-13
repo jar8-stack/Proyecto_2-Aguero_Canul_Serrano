@@ -25,4 +25,19 @@ interface ConfigurationDao {
 
     @Delete
     fun deleteConfiguration(configuration: Configuration)
+
+    @Query("SELECT number_questions FROM configurations WHERE id_configuration = :idConfigurationt")
+    fun traerNumeroDePreguntas(idConfigurationt: Int) : Int
+
+    @Query("SELECT number_tracks FROM configurations WHERE id_configuration = :idConfigurationg")
+    fun traerNumeroPistas(idConfigurationg: Int) : Int
+
+    @Query("SELECT dificulty FROM configurations WHERE id_configuration = :idConfigurationx")
+    fun traerNivelDificultad(idConfigurationx: Int) : String
+
+    @Query("SELECT tracks_enabled FROM configurations WHERE id_configuration = :idConfigurationc")
+    fun getPistasActivas(idConfigurationc: Int) : Boolean
+
+    @Query("UPDATE configurations SET number_questions = :NnumberQuestion, dificulty = :NdificultyLevel, number_tracks = :NnumberTracks, tracks_enabled = :NtracksEnabled WHERE id_configuration = :idConfiguracion")
+    fun actualizarConfiguracion(NnumberQuestion:Int,NdificultyLevel:String,NnumberTracks:Int,NtracksEnabled:Boolean, idConfiguracion: Int)
 }
