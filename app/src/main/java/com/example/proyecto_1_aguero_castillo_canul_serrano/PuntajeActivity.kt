@@ -2,7 +2,10 @@ package com.example.proyecto_1_aguero_castillo_canul_serrano
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -59,6 +62,8 @@ class PuntajeActivity : AppCompatActivity() {
             adapter = MyAdapter(dataNames)
         }
 
+
+
         var recyclerViewScores= findViewById<RecyclerView>(R.id.rvScores).apply {
             setHasFixedSize(true)
 
@@ -68,6 +73,11 @@ class PuntajeActivity : AppCompatActivity() {
             // specify an viewAdapter (see also next example)
             adapter = MyAdapter(dataScores)
         }
+
+
+
+
+
 
 
     }

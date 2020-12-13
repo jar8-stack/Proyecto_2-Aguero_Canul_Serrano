@@ -12,6 +12,9 @@ interface UserDao {
     @Query("SELECT * FROM usuario WHERE id_usuario = :idUser")
     fun getUser(idUser:Int):User
 
+    @Query("SELECT * FROM usuario WHERE nombre_usuario= :userName")
+    fun getUserByName(userName: String):User
+
     @Query("INSERT INTO usuario(nombre_usuario, score_usuario, id_configuration) VALUES(:userName, :score, :id_config)")
     fun insertUser(userName:String,score:Int,id_config:Int)
 

@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PuntajeActivity"></activity>
+        <activity android:name=".PuntajeUsuario"></activity>
+        <activity android:name=".PuntajeActivity" />
         <activity android:name=".SelectPlayerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
