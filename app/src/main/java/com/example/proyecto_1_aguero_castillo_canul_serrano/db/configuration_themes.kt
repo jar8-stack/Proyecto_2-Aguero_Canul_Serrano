@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class configuration_themes (
     @PrimaryKey @ColumnInfo(name = "id_configuration_theme") val id_configuration_theme: Int,
     @ColumnInfo(name = "id_configuration") val id_configuration: Int,
-    @ColumnInfo(name = "id_theme") val id_theme: Int
+    @ColumnInfo(name = "id_theme") val id_theme: Int,
+    @ColumnInfo(name = "status_configuration_themes") var status_configuration_themes: Boolean
 )
