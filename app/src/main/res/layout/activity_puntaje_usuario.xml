@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PuntajeUsuario"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -48,23 +48,59 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
+        <!--Hoa mundo-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvScoresU"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:scrollbars="vertical" />
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvDates"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="190dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50dp"
             android:scrollbars="vertical" />
 
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPuntajeOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logoadasdasd"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp"
+            android:layout_marginBottom="10dp"
+            android:text="Ordenar por puntaje"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnFechaOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logoadasdasd"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp"
+            android:layout_marginBottom="10dp"
+            android:text="Ordenar por fecha"
+            android:textSize="15sp" />
+
+
+
+    </LinearLayout>
+
+
+
 
 
 </LinearLayout>
