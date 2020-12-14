@@ -26,21 +26,31 @@ class GameModel(application: Application) : AndroidViewModel(application) {
 
     }).build()
 
-
+    //OBTENEMOS EL ID CONFIGURACIONES DEL USUARIO ACTUAL
+    var idConfiguracion = misPreferencias.getIdConfiguracion();
 
     private var temaTodos = misPreferencias.getTemasTodos();
 
-    private var temaArte = misPreferencias.getTemaArte();
-    private var temaCiencia = misPreferencias.getTemaCiencia();
-    private var temaCine = misPreferencias.getTemaCine();
-    private var temaHistoria = misPreferencias.getTemaHistoria();
-    private var temaProgramacion = misPreferencias.getTemaProgramacion();
-    private var themeCultura = misPreferencias.getTemaCultura();
 
-    private var numeroPreguntas = misPreferencias.getCantidadPreguntas();
+    //OBTENEMOS LOS TEMAS ACTIVOS DE LA BASE DE DATOS
+    private var temaArte = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Arte"));
+    private var temaCiencia = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Ciencia"));
+    private var temaCine = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Cine"));
+    private var temaHistoria = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Historia"));
+    private var temaProgramacion = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Programacion"));
+    private var themeCultura = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Cultura General"));
+
+    //OBTENEMOS LOS NUMERO DE PREGUNTAS DE LA BASE DE DATOS
+    private var numeroPreguntas = db.configurationDao().traerNumeroDePreguntas(idConfiguracion);
+
+
     private var dificultad = misPreferencias.getNivelEstablecido() //0->baja  1->media  2->alta
-    private var pistasActivas = misPreferencias.getPistasActivas()
-    private var numeroPistas = misPreferencias.getCantidadPistas()
+
+    //OBTENEMOS SI LAS PISTAS ESTAN ACTIVAS DE LA BASE DE DATOS
+    private var pistasActivas = db.configurationDao().getPistasActivas(idConfiguracion);
+
+    //OBTENEMOS EL NUMERO DE PISTAS DE LA BASE DE DATOS
+    private var numeroPistas = db.configurationDao().traerNumeroPistas(idConfiguracion);
 
     private var currentQuestion = 0
     private var answeredQuestions = 0
