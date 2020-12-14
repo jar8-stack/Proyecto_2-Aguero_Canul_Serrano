@@ -44,7 +44,7 @@ class GameModel(application: Application) : AndroidViewModel(application) {
     private var numeroPreguntas = db.configurationDao().traerNumeroDePreguntas(idConfiguracion);
 
 
-    private var dificultad = misPreferencias.getNivelEstablecido() //0->baja  1->media  2->alta
+    private var dificultad = db.configurationDao().traerNivelDificultad(idConfiguracion);//0->baja  1->media  2->alta
 
     //OBTENEMOS SI LAS PISTAS ESTAN ACTIVAS DE LA BASE DE DATOS
     private var pistasActivas = db.configurationDao().getPistasActivas(idConfiguracion);
