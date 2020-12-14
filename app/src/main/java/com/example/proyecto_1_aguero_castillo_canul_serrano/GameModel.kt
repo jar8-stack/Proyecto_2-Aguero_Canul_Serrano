@@ -10,6 +10,7 @@ import com.example.proyecto_1_aguero_castillo_canul_serrano.db.AppDatabase
 import com.example.proyecto_1_aguero_castillo_canul_serrano.db.Questions
 import com.example.proyecto_1_aguero_castillo_canul_serrano.db.Theme
 import com.example.proyecto_1_aguero_castillo_canul_serrano.db.question_answers
+import kotlin.properties.Delegates
 
 class GameModel(application: Application) : AndroidViewModel(application) {
     private var db_values:Database = Database()
@@ -25,7 +26,61 @@ class GameModel(application: Application) : AndroidViewModel(application) {
 
     }).build()
 
+
+
+    private var temaTodos = misPreferencias.getTemasTodos();
+
+    private var temaArte = misPreferencias.getTemaArte();
+    private var temaCiencia = misPreferencias.getTemaCiencia();
+    private var temaCine = misPreferencias.getTemaCine();
+    private var temaHistoria = misPreferencias.getTemaHistoria();
+    private var temaProgramacion = misPreferencias.getTemaProgramacion();
+    private var themeCultura = misPreferencias.getTemaCultura();
+
+    private var numeroPreguntas = misPreferencias.getCantidadPreguntas();
+    private var dificultad = misPreferencias.getNivelEstablecido() //0->baja  1->media  2->alta
+    private var pistasActivas = misPreferencias.getPistasActivas()
+    private var numeroPistas = misPreferencias.getCantidadPistas()
+
+    private var currentQuestion = 0
+    private var answeredQuestions = 0
+    private var correctQuestions: Float = 0f
+    private var points : Float = 0f
+    private var usarPista =false
+
+    private var resume_match:Boolean = false
+
+    fun madethisActiveQuestions(){
+        var activeQuestions = db.questionDao().getActiveQuestions()
+
+        for (question in activeQuestions){
+            var listaRespuestas= arrayListOf<String>()
+            lateinit var correct_answer:String
+
+            var dbTheme = db.themeDao().getThemeById(question.theme_id)
+            var answersQuestion = db.questionAnswersDao().getQuestionAnswersById(question.id)
+
+            for (answer in answersQuestion){
+                listaRespuestas.add(answer.text)
+                if (answer.correct_answer){
+                    correct_answer = answer.text
+                }
+            }
+            var f_question = ThemeQuestionDb(question.text,listaRespuestas,correct_answer,dbTheme.description,question.answered,question.id)
+            final_questions_toshow.add(f_question)
+        }
+
+    }
+    fun setActiveMatchValues(){
+        var match_values = db.UserMatchesDao().getMatch()
+        answeredQuestions = match_values.answered_question
+        correctQuestions = match_values.correct_questions
+        points = match_values.points
+        usarPista = match_values.use_hint
+        db.UserMatchesDao().deleteMatch()
+    }
     fun madeThis(){
+        db.resumeGameDao().updateResume(true)
         // *************** ARTE ***********************
         var dbThemeArt= db.themeDao().getThemeByName("Arte")
         var questionsArt= db.questionDao().getQuestionsById(dbThemeArt.id)
@@ -34,7 +89,6 @@ class GameModel(application: Application) : AndroidViewModel(application) {
 
         lateinit var oloDb: ThemeQuestionDb
         var listaRespuestas= arrayListOf<String>()
-
 
 
         for(i in 0..questionsArt.size-1){
@@ -51,7 +105,7 @@ class GameModel(application: Application) : AndroidViewModel(application) {
                 listaRespuestas.add(answerQuestionsPerQuestion[j].text)
             }
 
-            oloDb= ThemeQuestionDb(questionsArt[i].text, listaRespuestas, correctAnswer.text, dbThemeArt.description, false)
+            oloDb= ThemeQuestionDb(questionsArt[i].text, listaRespuestas, correctAnswer.text, dbThemeArt.description, false,questionsArt[i].id)
 
             arte_questions.add(oloDb)
         }
@@ -81,7 +135,7 @@ class GameModel(application: Application) : AndroidViewModel(application) {
                 listaRespuestasH.add(answerQuestionsPerQuestionH[j].text)
             }
 
-            oloDbH= ThemeQuestionDb(questionsHistory[i].text, listaRespuestasH, correctAnswerH.text, dbThemeHistory.description, false)
+            oloDbH= ThemeQuestionDb(questionsHistory[i].text, listaRespuestasH, correctAnswerH.text, dbThemeHistory.description, false,questionsHistory[i].id)
 
             history_questions.add(oloDbH)
         }
@@ -111,7 +165,7 @@ class GameModel(application: Application) : AndroidViewModel(application) {
                 listaRespuestasC.add(answerQuestionsPerQuestionC[j].text)
             }
 
-            oloDbC= ThemeQuestionDb(questionsCiencia[i].text, listaRespuestasC, correctAnswerC.text, dbThemeCiencia.description, false)
+            oloDbC= ThemeQuestionDb(questionsCiencia[i].text, listaRespuestasC, correctAnswerC.text, dbThemeCiencia.description, false,questionsCiencia[i].id)
 
             ciencia_questions.add(oloDbC)
         }
@@ -141,7 +195,7 @@ class GameModel(application: Application) : AndroidViewModel(application) {
                 listaRespuestasP.add(answerQuestionsPerQuestionP[j].text)
             }
 
-            oloDbP= ThemeQuestionDb(questionsProgramacion[i].text, listaRespuestasP, correctAnswerP.text, dbThemeProgramacion.description, false)
+            oloDbP= ThemeQuestionDb(questionsProgramacion[i].text, listaRespuestasP, correctAnswerP.text, dbThemeProgramacion.description, false,questionsProgramacion[i].id)
 
             programacion_questions.add(oloDbP)
         }
@@ -171,7 +225,7 @@ class GameModel(application: Application) : AndroidViewModel(application) {
                 listaRespuestasCine.add(answerQuestionsPerQuestionCine[j].text)
             }
 
-            oloDbCine= ThemeQuestionDb(questionsCine[i].text, listaRespuestasCine, correctAnswerCine.text, dbThemeCine.description, false)
+            oloDbCine= ThemeQuestionDb(questionsCine[i].text, listaRespuestasCine, correctAnswerCine.text, dbThemeCine.description, false,questionsCine[i].id)
 
             cine_questions.add(oloDbCine)
         }
@@ -184,7 +238,6 @@ class GameModel(application: Application) : AndroidViewModel(application) {
 
         lateinit var oloDbCultura: ThemeQuestionDb
         var listaRespuestasCultura= arrayListOf<String>()
-
 
 
         for(i in 0..questionsCultura.size-1){
@@ -201,38 +254,11 @@ class GameModel(application: Application) : AndroidViewModel(application) {
                 listaRespuestasCultura.add(answerQuestionsPerQuestionCultura[j].text)
             }
 
-            oloDbCultura= ThemeQuestionDb(questionsCultura[i].text, listaRespuestasCultura, correctAnswerCultura.text, dbThemeCultura.description, false)
+            oloDbCultura= ThemeQuestionDb(questionsCultura[i].text, listaRespuestasCultura, correctAnswerCultura.text, dbThemeCultura.description, false,questionsCultura[i].id)
 
             culture_questions.add(oloDbCultura)
         }
-
-
-
-
     }
-
-
-
-    private var temaTodos = misPreferencias.getTemasTodos();
-
-    private var temaArte = misPreferencias.getTemaArte();
-    private var temaCiencia = misPreferencias.getTemaCiencia();
-    private var temaCine = misPreferencias.getTemaCine();
-    private var temaHistoria = misPreferencias.getTemaHistoria();
-    private var temaProgramacion = misPreferencias.getTemaProgramacion();
-    private var themeCultura = misPreferencias.getTemaCultura();
-
-    private var numeroPreguntas = misPreferencias.getCantidadPreguntas();
-    private var dificultad = misPreferencias.getNivelEstablecido() //0->baja  1->media  2->alta
-    private var pistasActivas = misPreferencias.getPistasActivas()
-    private var numeroPistas = misPreferencias.getCantidadPistas()
-
-    private var currentQuestion = 0
-    private var answeredQuestions = 0
-    private var correctQuestions: Float = 0f
-    private var points : Float = 0f
-    private var usarPista =false
-
     private val questions = listOf<Question>(
         Question(R.string.question_text_1, false, false),
         Question(R.string.question_text_2, false, false),
@@ -241,30 +267,13 @@ class GameModel(application: Application) : AndroidViewModel(application) {
         Question(R.string.question_text_5, false, false),
         Question(R.string.question_text_6, true, false)
     )
-
     //Theme Questions
-    private var arte_questions = arrayListOf<ThemeQuestionDb>(
-
-
-    )
-
-    //Hola mundo
-    private val history_questions = arrayListOf<ThemeQuestionDb>(
-
-    )
-    private val ciencia_questions = arrayListOf<ThemeQuestionDb>(
-
-    )
-    private val programacion_questions = arrayListOf<ThemeQuestionDb>(
-
-    )
-    //te
-    private val cine_questions = arrayListOf<ThemeQuestionDb>(
-
-    )
-    private val culture_questions = arrayListOf<ThemeQuestionDb>(
-
-    )
+    private var arte_questions = arrayListOf<ThemeQuestionDb>()
+    private val history_questions = arrayListOf<ThemeQuestionDb>()
+    private val ciencia_questions = arrayListOf<ThemeQuestionDb>()
+    private val programacion_questions = arrayListOf<ThemeQuestionDb>()
+    private val cine_questions = arrayListOf<ThemeQuestionDb>()
+    private val culture_questions = arrayListOf<ThemeQuestionDb>()
 
     private val final_array2 = arrayListOf<ThemeQuestionDb>()
     private var final_questions_toshow = arrayListOf<ThemeQuestionDb>()
@@ -331,8 +340,21 @@ class GameModel(application: Application) : AndroidViewModel(application) {
         }
 
         final_questions_toshow = finalList
-    }
+        setActiveOnDb(final_questions_toshow)
 
+    }
+    private fun setActiveOnDb(final_questions:ArrayList<ThemeQuestionDb>){
+        for (question in final_questions){
+            db.questionDao().setActiveQuestion(question.id,true)
+        }
+    }
+    fun setAnswersOnDb(){
+        for (question in final_questions_toshow){
+            if (question.answered){
+                db.questionDao().setAnsweredQuestion(question.id,true)
+            }
+        }
+    }
     //funciones recursivas -
     val listaNums= arrayListOf<Int>()
     fun recu(numQ: Int, numC: Int): MutableList<Int> {
@@ -482,8 +504,8 @@ class GameModel(application: Application) : AndroidViewModel(application) {
     fun getUsarPista(): Boolean {return usarPista}
 
     fun setUsarPista(value:Boolean){ usarPista= value}
-
-
+    fun setResume(value:Boolean){resume_match = value}
+    fun getResume():Boolean{return resume_match}
 
     fun resPista(){
         numeroPistas--

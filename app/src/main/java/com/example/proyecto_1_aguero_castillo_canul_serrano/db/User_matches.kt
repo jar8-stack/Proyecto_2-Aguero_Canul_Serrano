@@ -12,5 +12,6 @@ data class User_matches(
     @ColumnInfo(name = "answered_question") var answered_question:Int,
     @ColumnInfo(name = "correct_questions") var correct_questions:Float,
     @ColumnInfo(name = "points") var points:Float,
-    @ColumnInfo(name = "use_hint") var use_hint:Boolean
+    @ColumnInfo(name = "use_hint") var use_hint:Boolean,
+
 )

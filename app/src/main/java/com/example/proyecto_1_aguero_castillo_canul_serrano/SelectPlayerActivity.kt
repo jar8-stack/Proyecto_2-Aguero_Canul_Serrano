@@ -46,6 +46,8 @@ class SelectPlayerActivity : AppCompatActivity() {
                     insertThemes(db)
                     //insertDefaultConfig(db)
                     insertQuestionsWAnswers(db)
+                    insertResume(db)
+
                 }}).build()
 
             //funcion para insertar usuario
@@ -140,7 +142,9 @@ class SelectPlayerActivity : AppCompatActivity() {
 
         }
     }
-
+    fun insertResume(db: SupportSQLiteDatabase){
+        db.execSQL("INSERT INTO [resume_game](resume) values(0)")
+    }
     fun insertThemes(db:SupportSQLiteDatabase){
         db.execSQL("INSERT INTO [themes](description) VALUES('Arte');")
         db.execSQL("INSERT INTO [themes](description) VALUES('Ciencia');")
@@ -155,135 +159,135 @@ class SelectPlayerActivity : AppCompatActivity() {
     fun insertQuestionsWAnswers(db: SupportSQLiteDatabase){
         //ARTE
         //1
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(1, '¿Quien pinto la monalisa?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(1, '¿Quien pinto la monalisa?',0,0);")
         //2
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(1, '¿En que siglo nació Van Gogh?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(1, '¿En que siglo nació Van Gogh?',0,0);")
         //3
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(1, '¿En que siglo nacio Diego Velázquez?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(1, '¿En que siglo nacio Diego Velázquez?',0,0);")
         //4
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(1, '¿En que museo esta la monalisa?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(1, '¿En que museo esta la monalisa?',0,0);")
         //5
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(1, '¿Qué nombre recibe el estilo arquitectónico de las construcciones árabes en la península?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(1, '¿Qué nombre recibe el estilo arquitectónico de las construcciones árabes en la península?',0,0);")
         //6
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(1, '¿En que año pinto Picasso el Guernica?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(1, '¿En que año pinto Picasso el Guernica?',0,0);")
         //7
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(1, '¿Quien hizo el mural de la capilla sixtina?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(1, '¿Quien hizo el mural de la capilla sixtina?',0,0);")
         //8
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(1, '¿Uno de estos artistas es mexicano?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(1, '¿Uno de estos artistas es mexicano?',0,0);")
         //9
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(1, '¿Quien pinto el nacimiento de venus?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(1, '¿Quien pinto el nacimiento de venus?',0,0);")
         //10
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(1, '¿En que siglo se inició el renacimiento?');\n")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(1, '¿En que siglo se inició el renacimiento?',0,0);\n")
 
         //CIENCIA
         //1
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(2, '¿Cuál es el país más grande del mundo?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(2, '¿Cuál es el país más grande del mundo?',0,0);")
         //2
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(2, '¿Qué animal utilizó Ivan Pavlov en sus experimentos?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(2, '¿Qué animal utilizó Ivan Pavlov en sus experimentos?',0,0);")
         //3
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(2, '¿Qué es el complejo de Edipo?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(2, '¿Qué es el complejo de Edipo?',0,0);")
         //4
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(2, '¿Por qué es conocida la bióloga británica Jane Goodall?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(2, '¿Por qué es conocida la bióloga británica Jane Goodall?',0,0);")
         //5
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(2, '¿Quiénes crearon el número 0?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(2, '¿Quiénes crearon el número 0?',0,0);")
         //6
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(2, '¿De donde viene la priedra pomex?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(2, '¿De donde viene la priedra pomex?',0,0);")
         //7
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(2, 'Elemento mas pesado de la tabla periodica');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(2, 'Elemento mas pesado de la tabla periodica',0,0);")
         //8
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(2, '¿Por qué es famoso el cometa Halley?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(2, '¿Por qué es famoso el cometa Halley?',0,0);")
         //9
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(2, 'El dinosaurio más pequeño que existió sobre la faz de la Tierra fue...');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(2, 'El dinosaurio más pequeño que existió sobre la faz de la Tierra fue...',0,0);")
         //10
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(2, '¿De qué está compuesta la lluvia ácida?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(2, '¿De qué está compuesta la lluvia ácida?',0,0);")
 
         //CINE
         //1
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(3, 'Tu falta de fe me resulta perturbadora');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(3, 'Tu falta de fe me resulta perturbadora',0,0);")
         //2
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(3, 'Cancion que suena en los creditos del club de la pelea');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(3, 'Cancion que suena en los creditos del club de la pelea',0,0);")
         //3
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(3, 'Director que dirigio la cinta la naranja mecanica');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(3, 'Director que dirigio la cinta la naranja mecanica',0,0);")
         //4
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(3, 'Pelicula en la que aparece Bruce Willis y Jhon Travolta en el reparto');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(3, 'Pelicula en la que aparece Bruce Willis y Jhon Travolta en el reparto',0,0);")
         //5
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(3, 'Ultima pelicula de Cameron Boyce');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(3, 'Ultima pelicula de Cameron Boyce',0,0);")
         //6
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(3, 'Actor que inetrpreta a batman en la trilogia de Nolan');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(3, 'Actor que inetrpreta a batman en la trilogia de Nolan',0,0);")
         //7
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(3, 'Pelicula en la que aparece keanu reeves en donde todo ocurre por un perro');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(3, 'Pelicula en la que aparece keanu reeves en donde todo ocurre por un perro',0,0);")
         //8
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(3, 'Primer anime en ganar un oscar');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(3, 'Primer anime en ganar un oscar',0,0);")
         //9
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(3, 'Actor que aparece en el video musical de Stylo de gorillaz');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(3, 'Actor que aparece en el video musical de Stylo de gorillaz',0,0);")
         //10
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(3, 'Serie de hacker mas cercana a la realidad');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(3, 'Serie de hacker mas cercana a la realidad',0,0);")
 
         //HISTORIA
         //1
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(4, '¿Qué líder tribal luchó contra la ocupación romana de Gran Bretaña (Britania)?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(4, '¿Qué líder tribal luchó contra la ocupación romana de Gran Bretaña (Britania)?',0,0);")
         //2
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(4, '¿Con qué nombre se conoce el escándalo que obligó al presidente estadounidense Richard Nixon a dimitir?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(4, '¿Con qué nombre se conoce el escándalo que obligó al presidente estadounidense Richard Nixon a dimitir?',0,0);")
         //3
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(4, '¿Qué esposas de Enrique VIII fueron decapitadas?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(4, '¿Qué esposas de Enrique VIII fueron decapitadas?',0,0);")
         //4
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(4, '¿Qué emperador romano legalizó el cristianismo y puso fin a la persecución de los cristianos?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(4, '¿Qué emperador romano legalizó el cristianismo y puso fin a la persecución de los cristianos?',0,0);")
         //5
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(4, '¿Cuántas personas murieron durante el Gran Incendio de Londres de 1666 según los registros?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(4, '¿Cuántas personas murieron durante el Gran Incendio de Londres de 1666 según los registros?',0,0);")
         //6
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(4, '¿Qué hito informático de 1969 cambiaría radicalmente el curso de la historia de la humanidad?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(4, '¿Qué hito informático de 1969 cambiaría radicalmente el curso de la historia de la humanidad?',0,0);")
         //7
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(4, 'Primer presidente de EEUU');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(4, 'Primer presidente de EEUU',0,0);")
         //8
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(4, '¿Por qué es significativo el Poema de Gilgamesh?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(4, '¿Por qué es significativo el Poema de Gilgamesh?',0,0);")
         //9
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(4, '¿Cuál es el nombre de la famosa batalla donde Napoleón Bonaparte fue derrotado?s');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(4, '¿Cuál es el nombre de la famosa batalla donde Napoleón Bonaparte fue derrotado?s',0,0);")
         //10
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(4, '¿A través de qué río africano se alzó el antiguo Egipto?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(4, '¿A través de qué río africano se alzó el antiguo Egipto?',0,0);")
 
         //PROGRAMACIÓN
         //1
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(5, 'Lenguaje de programación favorito de los hackers');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(5, 'Lenguaje de programación favorito de los hackers',0,0);")
         //2
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(5, 'Lenguaje de programación militar creado por las fuerzas armadas de los Estados Unidos');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(5, 'Lenguaje de programación militar creado por las fuerzas armadas de los Estados Unidos',0,0);")
         //3
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(5, 'La siguiente es una metodologpia agil de desarrollo de software');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(5, 'La siguiente es una metodologpia agil de desarrollo de software',0,0);")
         //4
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(5, 'IDE mas utilizada para desarrollo movil Android');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(5, 'IDE mas utilizada para desarrollo movil Android',0,0);")
         //5
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(5, 'Es elsguiente es un bucle');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(5, 'Es elsguiente es un bucle',0,0);")
         //6
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(5, 'Ssistema operativo basado en UNIX utilizado mayormente para areas operativas del software');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(5, 'Ssistema operativo basado en UNIX utilizado mayormente para areas operativas del software',0,0);")
         //7
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(5, 'Lenguaje de etiquetas utilizado para el desarrollo de paginas web');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(5, 'Lenguaje de etiquetas utilizado para el desarrollo de paginas web',0,0);")
         //8
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(5, 'Framework de desarrollo movil hibrido de nodeJS utilizado por facebook para su aplicación');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(5, 'Framework de desarrollo movil hibrido de nodeJS utilizado por facebook para su aplicación',0,0);")
         //9
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(5, 'El sigueinte es un lenguaje de programación utilizado para desarrollo nativo Android');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(5, 'El sigueinte es un lenguaje de programación utilizado para desarrollo nativo Android',0,0);")
         //10
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(5, 'Framework de desarrollo web de python');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(5, 'Framework de desarrollo web de python',0,0);")
 
         //CULTURA GENERAL
         //1
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(6, '¿Cuales son los 5 tipos de sabores primarios?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(6, '¿Cuales son los 5 tipos de sabores primarios?',0,0);")
         //2
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(6, '¿Cual es el lugar mas frio en la tierra?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(6, '¿Cual es el lugar mas frio en la tierra?',0,0);")
         //3
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(6, '¿Quien escribio la odisea?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(6, '¿Quien escribio la odisea?',0,0);")
         //4
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(6, '¿Cual es el rio mas largo del mundo ¿?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(6, '¿Cual es el rio mas largo del mundo ¿?',0,0);")
         //5
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(6, 'Como se llama la actual reina del Reino Unidos');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(6, 'Como se llama la actual reina del Reino Unidos',0,0);")
         //6
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(6, '¿En qué continente esta Ecuador?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(6, '¿En qué continente esta Ecuador?',0,0);")
         //7
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(6, '¿Donde se originaron los juegos olimpicos?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(6, '¿Donde se originaron los juegos olimpicos?',0,0);")
         //8
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(6, '¿Que tipo de animal es la ballena?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(6, '¿Que tipo de animal es la ballena?',0,0);")
         //9
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(6, '¿De que color es la bandera de México?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(6, '¿De que color es la bandera de México?',0,0);")
         //10
-        db.execSQL("INSERT INTO questions(theme_id, text) VALUES(6, '¿En que año finalizo la segunda guerra mundial?');")
+        db.execSQL("INSERT INTO questions(theme_id, text,active,answered) VALUES(6, '¿En que año finalizo la segunda guerra mundial?',0,0);")
 
 
         //Respuestas de pregunta 1

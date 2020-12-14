@@ -14,6 +14,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.proyecto_1_aguero_castillo_canul_serrano.db.AppDatabase
 import com.example.proyecto_1_aguero_castillo_canul_serrano.db.question_answers
+import com.facebook.stetho.Stetho
 import kotlin.random.Random
 
 class GameActivity : AppCompatActivity() {
@@ -58,6 +59,7 @@ class GameActivity : AppCompatActivity() {
             var points = model.getPoints()
             var useHint = model.getUsarPista()
 
+            model.setAnswersOnDb()
             db.UserMatchesDao().insertMatch(id_user.toString().toInt(),currentQuestion,answeredQuestions,correctQuestions,points,useHint)
             return@MainActivity
         }
@@ -73,7 +75,7 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        //********************Llenar las preguntas*******************
+        Stetho.initializeWithDefaults(this)
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
@@ -82,7 +84,7 @@ class GameActivity : AppCompatActivity() {
 
         }).build()
 
-        model.madeThis()
+
 
         //**********************Llenar las preguntas******************
 
@@ -99,8 +101,19 @@ class GameActivity : AppCompatActivity() {
 
         listaRespuestas= findViewById(R.id.respuestas)
 
-        model.filtrateQuestions()
-        model.showQuestions()
+        var resume = db.resumeGameDao().getResume()
+        print(resume.resume)
+        if (!resume.resume){
+            print("Partida desde 0")
+            model.madeThis()
+            model.filtrateQuestions()
+            model.showQuestions()
+        }else{
+            print("Encontre partida")
+            model.madethisActiveQuestions()
+            model.setActiveMatchValues()
+        }
+
 
         if(model.pistasActivas())
         {
