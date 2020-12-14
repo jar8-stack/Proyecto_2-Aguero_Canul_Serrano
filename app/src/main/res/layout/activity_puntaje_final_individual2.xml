@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PuntajeActivityFinalIndividual">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logoadasdasd"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="Score">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="254dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="Fecha">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="Uso pista">
+
+        </TextView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <!--Hoa mundo-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvScoresF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDatesF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="190dp"
+            android:scrollbars="vertical" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPistasF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="80dp"
+            android:scrollbars="vertical" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

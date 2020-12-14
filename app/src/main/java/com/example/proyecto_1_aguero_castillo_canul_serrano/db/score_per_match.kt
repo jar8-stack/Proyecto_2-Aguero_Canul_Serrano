@@ -10,5 +10,6 @@ data class score_per_match(
     @PrimaryKey @ColumnInfo(name = "id_match") val id_match: Int?,
     @ColumnInfo(name = "id_usuario") var id_usuario: Int,
     @ColumnInfo(name = "score_per_match") var score_per_match: Int,
-    @ColumnInfo(name = "date_match") var date_match: String
+    @ColumnInfo(name = "date_match") var date_match: String,
+    @ColumnInfo(name="uso_pista") var uso_pista: Boolean
 )

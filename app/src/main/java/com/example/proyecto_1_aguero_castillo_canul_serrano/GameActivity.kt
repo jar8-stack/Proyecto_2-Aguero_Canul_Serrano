@@ -250,12 +250,7 @@ class GameActivity : AppCompatActivity() {
 
             correctAnswersText.setText(model.correctQuestions().toInt().toString() + " correct answers")
 
-            val intent = Intent(this, FinishActivity::class.java)
-            intent.putExtra("popuptitle", "Error")
-            intent.putExtra("popuptext", "Sorry, that email address is already used!")
-            intent.putExtra("popupbtn", "OK")
-            intent.putExtra("darkstatusbar", false)
-            intent.putExtra("puntajeExtra", "${calculateResultWithoutPercent()}")
+            val intent = Intent(this, PuntajeActivityFinalIndividual::class.java)
             startActivity(intent)
         }
     }

@@ -35,13 +35,19 @@ class PuntajeUsuario : AppCompatActivity() {
 
 
 
-        val score1= score_per_match(null, 1, 30, "13-12-2020")
-        val score2= score_per_match(null, 1, 40, "12-12-2020")
-        val score3= score_per_match(null, 1, 20, "16-12-2020")
 
-        db.ScorePerMatch().insertUser(score1.id_usuario, score1.score_per_match, score1.date_match)
-        db.ScorePerMatch().insertUser(score2.id_usuario, score2.score_per_match, score2.date_match)
-        db.ScorePerMatch().insertUser(score3.id_usuario, score3.score_per_match, score3.date_match)
+        /*
+        val score1= score_per_match(null, 1, 30, "13-12-2020", false)
+        val score2= score_per_match(null, 1, 40, "12-12-2020", false)
+        val score3= score_per_match(null, 1, 20, "16-12-2020", false)
+
+        db.ScorePerMatch().insertUser(score1.id_usuario, score1.score_per_match, score1.date_match, score1.uso_pista)
+        db.ScorePerMatch().insertUser(score2.id_usuario, score2.score_per_match, score2.date_match, score2.uso_pista)
+        db.ScorePerMatch().insertUser(score3.id_usuario, score3.score_per_match, score3.date_match, score3.uso_pista)
+        */
+
+
+
 
 
 
@@ -89,11 +95,28 @@ class PuntajeUsuario : AppCompatActivity() {
 
         btnFechaOrder.setOnClickListener {
 
+            var usuarioDatosDate= db.userDao().getUserByName(usuario)
+
+            var scorePerUserDate= db.ScorePerMatch().getScorePerUserDesc(usuarioDatosDate.id_usuario)
+
+            var dataScoresDate= arrayListOf<String>()
+            var dataDatesDate= arrayListOf<String>()
+
+            var longDate= scorePerUserDate.size-1
+
+            for(i in 0..longDate){
+                dataScoresDate.add(scorePerUserDate[i].score_per_match.toString())
+                dataDatesDate.add(scorePerUserDate[i].date_match.toString())
+            }
+
+            recyclerViewDates.adapter= MyAdapter(dataDatesDate)
+            recyclerViewScores.adapter= MyAdapter(dataScoresDate)
+
         }
         btnPuntajeOrder.setOnClickListener {
             var usuarioDatosDesc= db.userDao().getUserByName(usuario)
 
-            var scorePerUserDesc= db.ScorePerMatch().getScorePerUserDesc(usuarioDatos.id_usuario)
+            var scorePerUserDesc= db.ScorePerMatch().getScorePerUserDesc(usuarioDatosDesc.id_usuario)
 
             var dataScoresDesc= arrayListOf<String>()
             var dataDatesDesc= arrayListOf<String>()
