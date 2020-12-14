@@ -43,16 +43,9 @@ class GameModel(application: Application) : AndroidViewModel(application) {
     //OBTENEMOS LOS NUMERO DE PREGUNTAS DE LA BASE DE DATOS
     private var numeroPreguntas = db.configurationDao().traerNumeroDePreguntas(idConfiguracion);
 
-
-    private var dificultad = 0
-
     private var dificultadDB = db.configurationDao().traerNivelDificultad(idConfiguracion);//0->baja  1->media  2->alta
 
-    when(dificultadDB) {
-        "F" -> dificultad = 1
-        "M" -> dificultad = 2
-        "D" -> dificultad = 3
-    }
+    private var dificultad = traducirDificultadLetraToNumero(dificultadDB);
 
     //OBTENEMOS SI LAS PISTAS ESTAN ACTIVAS DE LA BASE DE DATOS
     private var pistasActivas = db.configurationDao().getPistasActivas(idConfiguracion);
@@ -434,6 +427,15 @@ class GameModel(application: Application) : AndroidViewModel(application) {
             }
         }
         println(final_array2)
+    }
+
+    fun traducirDificultadLetraToNumero(dificultadDeDB : String) : Int {
+        when(dificultadDeDB) {
+            "F" -> return 0
+            "M" -> return 1
+            "D" -> return 2
+        }
+        return 0
     }
 
     var randoms = arrayListOf<Int>()
