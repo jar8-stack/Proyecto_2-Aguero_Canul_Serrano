@@ -29,9 +29,6 @@ class GameModel(application: Application) : AndroidViewModel(application) {
     //OBTENEMOS EL ID CONFIGURACIONES DEL USUARIO ACTUAL
     var idConfiguracion = misPreferencias.getIdConfiguracion();
 
-    private var temaTodos = misPreferencias.getTemasTodos();
-
-
     //OBTENEMOS LOS TEMAS ACTIVOS DE LA BASE DE DATOS
     private var temaArte = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Arte"));
     private var temaCiencia = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Ciencia"));
@@ -39,6 +36,8 @@ class GameModel(application: Application) : AndroidViewModel(application) {
     private var temaHistoria = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Historia"));
     private var temaProgramacion = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Programacion"));
     private var themeCultura = db.ConfigurationThemesDAO().traerStatusTema(idConfiguracion,db.themeDao().getThemeId("Cultura General"));
+
+    private var temaTodos = temaArte && temaCiencia && temaCine && temaHistoria && temaProgramacion && themeCultura
 
     //OBTENEMOS LOS NUMERO DE PREGUNTAS DE LA BASE DE DATOS
     private var numeroPreguntas = db.configurationDao().traerNumeroDePreguntas(idConfiguracion);

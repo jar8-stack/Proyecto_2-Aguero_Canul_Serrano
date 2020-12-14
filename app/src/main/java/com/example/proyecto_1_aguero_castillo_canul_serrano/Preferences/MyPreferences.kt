@@ -5,18 +5,6 @@ import android.content.Context
 class MyPreferences(context: Context) {
 
     val PREFERENCES_NAME = "SharedPreferencesGame"
-    val PREFERENCES_CANTIDAD_PREGUNTAS = "SharedPreferencesCantidadPreguntas"
-    val PREFERENCES_NIVEL_ESTABLECIDO = "SharedPreferencesNivelEstablecido"
-    val PREFERENCES_CANTIDAD_PISTAS = "SharedPreferencesCantidadPistas"
-    val PREFERENCES_PISTAS_ACTIVAS = "SharedPreferencesPistasActivas"
-
-    val PREFERENCES_TEMA_ARTE = "SharedPreferencesTemaArte"
-    val PREFERENCES_TEMA_CIENCIA = "SharedPreferencesTemaCiencia"
-    val PREFERENCES_TEMA_CINE = "SharedPreferencesTemaCine"
-    val PREFERENCES_TEMA_HISTORIA = "SharedPreferencesTemaHistoria"
-    val PREFERENCES_TEMA_PROGRAMACION = "SharedPreferencesTemaProgramacion"
-    val PREFERENCES_TEMA_CULTURA = "SharedPreferencesTemaCultura"
-
     val PREFERENCES_NOMBRE_USUARIO = "SharedPreferencesNombreUsuario"
     val PREFERENCES_ID_USUARIO = "SharedPreferencesIdUsuario"
     val PREFERENCES_LOGEADO = "SharedPreferencesLogeado"
@@ -62,17 +50,6 @@ class MyPreferences(context: Context) {
         val editor = preferences.edit()
         editor.putString(PREFERENCES_ID_USUARIO, Id)
         editor.apply()
-    }
-
-
-    fun getNivelEstablecido() : Int { // 0 = BAJA, 1 = MEDIA, 2 = ALTA
-        return preferences.getInt(PREFERENCES_NIVEL_ESTABLECIDO, 1)
-    }
-
-    fun getTemasTodos() : Boolean{
-        return (preferences.getBoolean(PREFERENCES_TEMA_ARTE, false) && preferences.getBoolean(PREFERENCES_TEMA_CIENCIA, false)
-                && preferences.getBoolean(PREFERENCES_TEMA_CINE, false) && preferences.getBoolean(PREFERENCES_TEMA_HISTORIA, false)
-                && preferences.getBoolean(PREFERENCES_TEMA_PROGRAMACION, true) && preferences.getBoolean(PREFERENCES_TEMA_CULTURA, false))
     }
 
     /*
