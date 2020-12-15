@@ -12,6 +12,7 @@ import com.example.proyecto_1_aguero_castillo_canul_serrano.Preferences.MyPrefer
 import com.example.proyecto_1_aguero_castillo_canul_serrano.db.AppDatabase
 import com.facebook.stetho.Stetho
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -58,7 +59,9 @@ class MainActivity : AppCompatActivity() {
             mAlertDialogJuego.setMessage("¿Desea reanudar partida?")
             mAlertDialogJuego.setPositiveButton("Si") MainActivity@{ dialog, id ->
                 //Reanudar partida guardada
-                val intent: Intent = Intent(this, GameActivity::class.java)
+                val intent: Intent = Intent(this, GameActivity::class.java).apply {
+                    putExtra("userName", nombreUsuario.text)
+                }
                 startActivity(intent)
             }
 
@@ -67,7 +70,9 @@ class MainActivity : AppCompatActivity() {
                 db.UserMatchesDao().deleteMatch()
                 db.questionDao().resetQuestions()
                 db.resumeGameDao().updateResume(false)
-                val intent: Intent = Intent(this, GameActivity::class.java)
+                val intent: Intent = Intent(this, GameActivity::class.java).apply {
+                    putExtra("userName", nombreUsuario.text)
+                }
                 startActivity(intent)
             }
             mAlertDialogJuego.show()

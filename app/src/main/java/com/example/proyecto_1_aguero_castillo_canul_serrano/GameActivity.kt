@@ -1,21 +1,25 @@
 package com.example.proyecto_1_aguero_castillo_canul_serrano
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.get
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.size
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.proyecto_1_aguero_castillo_canul_serrano.db.AppDatabase
-import com.example.proyecto_1_aguero_castillo_canul_serrano.db.question_answers
 import com.facebook.stetho.Stetho
+import java.lang.Double.parseDouble
+import java.lang.Integer.parseInt
+import java.lang.NumberFormatException
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.random.Random
+
 
 class GameActivity : AppCompatActivity() {
 
@@ -43,8 +47,11 @@ class GameActivity : AppCompatActivity() {
             applicationContext,
             AppDatabase::class.java,
             dbValues.getName()
-        ).allowMainThreadQueries().addCallback(object : RoomDatabase.Callback(){
+        ).allowMainThreadQueries().addCallback(object : RoomDatabase.Callback() {
         }).build()
+
+        val userName= intent.getStringExtra("userName")
+
         val mAlertDialog= AlertDialog.Builder(this@GameActivity)
         mAlertDialog.setTitle("Salir de partida")
         mAlertDialog.setMessage("¿Desea salir de la partida?")
@@ -60,11 +67,18 @@ class GameActivity : AppCompatActivity() {
             var useHint = model.getUsarPista()
 
             model.setAnswersOnDb()
-            db.UserMatchesDao().insertMatch(id_user.toString().toInt(),currentQuestion,answeredQuestions,correctQuestions,points,useHint)
+            db.UserMatchesDao().insertMatch(
+                id_user.toString().toInt(),
+                currentQuestion,
+                answeredQuestions,
+                correctQuestions,
+                points,
+                useHint
+            )
             return@MainActivity
         }
 
-        mAlertDialog.setNegativeButton("No"){dialog, id ->
+        mAlertDialog.setNegativeButton("No"){ dialog, id ->
             dialog.dismiss()
         }
 
@@ -80,7 +94,7 @@ class GameActivity : AppCompatActivity() {
             applicationContext,
             AppDatabase::class.java,
             dbValues.getName()
-        ).allowMainThreadQueries().addCallback(object : RoomDatabase.Callback(){
+        ).allowMainThreadQueries().addCallback(object : RoomDatabase.Callback() {
 
         }).build()
 
@@ -122,14 +136,16 @@ class GameActivity : AppCompatActivity() {
         }
 
         questionTextView.setText(model.currentQuestionObj().questionString)
-        questionCount.setText((model.currentQuestionNum()+1).toString()+"/"+model.numOfQuestions())
-        questionsAnswered.setText(" : "+model.answeredQuestions())
+        questionCount.setText((model.currentQuestionNum() + 1).toString() + "/" + model.numOfQuestions())
+        questionsAnswered.setText(" : " + model.answeredQuestions())
 
         if(model.answeredQuestions() == model.numOfQuestions()){
             yourResultsText.setText(R.string.final_1)
             resultText.setText(calculateFinalResult())
 
-            correctAnswersText.setText(model.correctQuestions().toInt().toString() + " correct answers")
+            correctAnswersText.setText(
+                model.correctQuestions().toInt().toString() + " correct answers"
+            )
         }
 
 
@@ -138,27 +154,27 @@ class GameActivity : AppCompatActivity() {
         //resultado False button
 
         //next button
-        nextButton.setOnClickListener{view: View ->
+        nextButton.setOnClickListener{ view: View ->
             model.nextQuestion()
             questionTextView.setText(model.currentQuestionObj().questionString)
-            questionCount.setText((model.currentQuestionNum()+1).toString()+"/"+model.numOfQuestions())
+            questionCount.setText((model.currentQuestionNum() + 1).toString() + "/" + model.numOfQuestions())
 
             asignedAnswers()
 
 
         }
         //previous button
-        previousButton.setOnClickListener{view:View ->
+        previousButton.setOnClickListener{ view: View ->
             model.previousQuestion()
-            if(model.currentQuestionNum() == -1) model.updateCurrentQuestion(model.numOfQuestions()-1)
+            if(model.currentQuestionNum() == -1) model.updateCurrentQuestion(model.numOfQuestions() - 1)
             questionTextView.setText(model.currentQuestionObj().questionString)
-            questionCount.setText((model.currentQuestionNum()+1).toString()+"/"+model.numOfQuestions())
+            questionCount.setText((model.currentQuestionNum() + 1).toString() + "/" + model.numOfQuestions())
 
             asignedAnswers()
         }
 
 
-        btnPista.setOnClickListener{view:View ->
+        btnPista.setOnClickListener{ view: View ->
 
 
             if(model.getNumPistas() >0 && !model.currentQuestionObj().answered){
@@ -206,8 +222,10 @@ class GameActivity : AppCompatActivity() {
 
 
         listaRespuestas.onItemClickListener = object : AdapterView.OnItemClickListener{
-            override fun onItemClick(parent: AdapterView<*>, view: View,
-                                     position: Int, id: Long) {
+            override fun onItemClick(
+                parent: AdapterView<*>, view: View,
+                position: Int, id: Long
+            ) {
 
                 // value of item that is clicked
                 val itemValue = listaRespuestas.getItemAtPosition(position) as String
@@ -221,7 +239,11 @@ class GameActivity : AppCompatActivity() {
                     if(correctAnswerString == itemValue){
 
                         // Toast the values
-                        Toast.makeText(applicationContext, "Dios mio le atinaste", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            applicationContext,
+                            "Dios mio le atinaste",
+                            Toast.LENGTH_LONG
+                        ).show()
                         model.increaseCorrectQuestions()
                         model.setUsarPista(false)
 
@@ -240,24 +262,122 @@ class GameActivity : AppCompatActivity() {
         asignedAnswers()
     }
 
+
     fun updateAnsweredQuestions() {
         model.increaseAnsweredQuestions()
-        questionsAnswered.setText(" : "+model.answeredQuestions())
+        questionsAnswered.setText(" : " + model.answeredQuestions())
+
+        val userName= intent.getStringExtra("userName")
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            dbValues.getName()
+        ).allowMainThreadQueries().addCallback(object : RoomDatabase.Callback() {
+        }).build()
+
 
         if(model.answeredQuestions() ==  model.numOfQuestions()){
             yourResultsText.setText(R.string.final_1)
             resultText.setText(calculateFinalResult())
 
-            correctAnswersText.setText(model.correctQuestions().toInt().toString() + " correct answers")
+            correctAnswersText.setText(
+                model.correctQuestions().toInt().toString() + " correct answers"
+            )
+
+
+
+            var userNameComplete=""
+
+            var numeric= true
+            try{
+                val num= parseInt(userName[0].toString())
+            }catch (e: NumberFormatException){
+                numeric= false
+            }
+
+            if(numeric){
+                for(i in 0..userName.length-1){
+                    if(i > 3){
+                        userNameComplete= userNameComplete+ userName[i]
+                    }
+                }
+            }else{
+                for(i in 0..userName.length-1){
+                    if(userName[i].toString() != " "){
+                        userNameComplete= userNameComplete+ userName[i]
+                    }else{
+                        break
+                    }
+                }
+            }
+
+
+
+
+
+
+            var usuarioXd= db.userDao().getUserByName(userNameComplete)
+
+
+
+
+
+            var fechaActual= obtenerFechaActual("America/Mexico_City")
+
+            var resultadoFinal= ""
+            var resultadoString= calculateFinalResult().toString()
+            for(i in 0..resultadoString.length-2){
+                resultadoFinal= resultadoFinal +resultadoString[i]
+            }
+
+            var scoreGlobal= usuarioXd.score_usuario+resultadoFinal.toInt()
+
+            db.userDao().updateUserById(usuarioXd.id_usuario, scoreGlobal)
+
+            var usoPista= model.getBoolPista()
+
+            if(usoPista){
+                if (fechaActual != null) {
+                    db.ScorePerMatch().insertUserScore(usuarioXd.id_usuario, resultadoFinal.toInt(), fechaActual, true)
+                }
+            }else{
+                if (fechaActual != null) {
+                    db.ScorePerMatch().insertUserScore(usuarioXd.id_usuario, resultadoFinal.toInt(), fechaActual, false)
+                }
+            }
+
+
+
+
+
 
             val intent = Intent(this, PuntajeActivityFinalIndividual::class.java)
             startActivity(intent)
         }
     }
 
+
+    fun obtenerFechaActual(zonaHoraria: String?): String? {
+        val formato = "dd-MM-yyyy"
+        return obtenerFechaConFormato(formato, zonaHoraria)
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun obtenerFechaConFormato(formato: String?, zonaHoraria: String?): String? {
+        val calendar: Calendar = Calendar.getInstance()
+        val date: Date = calendar.getTime()
+        val sdf: SimpleDateFormat
+        sdf = SimpleDateFormat(formato)
+        sdf.setTimeZone(TimeZone.getTimeZone(zonaHoraria))
+        return sdf.format(date)
+    }
+
     fun calculateFinalResult(): String {
         var result:Int = ((model.getPoints()/model.numOfQuestions())*100).toInt()
-        println("("+model.getPoints().toString() + "/" + model.numOfQuestions().toString()+") *100")
+        println(
+            "(" + model.getPoints().toString() + "/" + model.numOfQuestions().toString() + ") *100"
+        )
         return "$result%"
     }
 
@@ -266,7 +386,7 @@ class GameActivity : AppCompatActivity() {
         return result
     }
 
-    fun showToast(text:String){
+    fun showToast(text: String){
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
@@ -289,14 +409,14 @@ class GameActivity : AppCompatActivity() {
         var cont2=0
         var contSave=0
         when(dificultad){
-            0 ->{
-                while(listRes.size < 2){
-                    for(element in reqId){
+            0 -> {
+                while (listRes.size < 2) {
+                    for (element in reqId) {
                         cont2++
                         var string: String = element
 
-                        if(string == correctAnswerString){
-                            contSave= cont2-1
+                        if (string == correctAnswerString) {
+                            contSave = cont2 - 1
                         }
                         lisResPrueba.add(string)
                     }
@@ -310,14 +430,14 @@ class GameActivity : AppCompatActivity() {
 
                 }
             }
-            1 ->{
-                while(listRes.size < 3) {
+            1 -> {
+                while (listRes.size < 3) {
                     for (element in reqId) {
                         cont2++
                         var string: String = element
 
                         if (string == correctAnswerString) {
-                            contSave= cont2-1
+                            contSave = cont2 - 1
                         }
                         lisResPrueba.add(string)
                     }
@@ -331,14 +451,14 @@ class GameActivity : AppCompatActivity() {
                     }
                 }
             }
-            2 ->{
-                while(listRes.size < 4) {
+            2 -> {
+                while (listRes.size < 4) {
                     for (element in reqId) {
                         cont2++
                         var string: String = element
 
                         if (string == correctAnswerString) {
-                            contSave= cont2-1
+                            contSave = cont2 - 1
                         }
                         lisResPrueba.add(string)
                     }

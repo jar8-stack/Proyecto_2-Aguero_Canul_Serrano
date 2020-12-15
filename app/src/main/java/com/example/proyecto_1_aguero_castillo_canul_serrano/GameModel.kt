@@ -15,6 +15,7 @@ import kotlin.properties.Delegates
 class GameModel(application: Application) : AndroidViewModel(application) {
     private var db_values:Database = Database()
     val misPreferencias = MyPreferences(getApplication())
+    var boolPista= false
 
     private var artList= listOf<Theme>()
 
@@ -464,9 +465,16 @@ class GameModel(application: Application) : AndroidViewModel(application) {
         randoms.add(num)
         return num
     }
+
+    @JvmName("getBoolPista1")
+    fun getBoolPista(): Boolean {
+        return boolPista
+    }
+
     fun pistaPena() :Float {
         //var dificultad= arrayOf<String>("Baja", "Media", "Alta")
         //var numQuestions= 10
+        boolPista= true
         var regla3= 10/numeroPreguntas
         var res= 0f
         var cate= dificultad

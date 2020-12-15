@@ -21,5 +21,5 @@ interface Score_per_match_Dao {
     fun getFiveScores(): List<score_per_match>
 
     @Query("INSERT INTO score_per_match(id_usuario, score_per_match, date_match, uso_pista) VALUES(:idUsuario, :score_perMatch, :date, :uso_pista)")
-    fun insertUser(idUsuario:Int,score_perMatch:Int,date: String, uso_pista: Boolean)
+    fun insertUserScore(idUsuario:Int,score_perMatch:Int,date: String, uso_pista: Boolean)
 }
