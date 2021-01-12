@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "831854132624",
+    "project_id": "ordinariomemorama",
+    "storage_bucket": "ordinariomemorama.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831854132624:android:3f18bcdfee8f422d0a4715",
+        "android_client_info": {
+          "package_name": "com.example.proyecto_1_aguero_castillo_canul_serrano"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831854132624-qsrtci0kmeg2vvvaopiqcg4m10lkpfn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg5l8He_GGhDttdHfVBRhgG-6wScK_umE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831854132624-qsrtci0kmeg2vvvaopiqcg4m10lkpfn2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

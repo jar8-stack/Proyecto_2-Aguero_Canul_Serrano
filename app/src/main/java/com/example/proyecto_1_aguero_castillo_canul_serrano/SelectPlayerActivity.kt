@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.room.Room
@@ -590,5 +591,10 @@ class SelectPlayerActivity : AppCompatActivity() {
         db.execSQL("INSERT INTO question_answers(id, text, correct_answer) VALUES(60, '1972', 0);")
         db.execSQL("INSERT INTO question_answers(id, text, correct_answer) VALUES(60, '1934', 0);")
         db.execSQL("INSERT INTO question_answers(id, text, correct_answer) VALUES(60, '1957', 0);")
+    }
+
+    fun lanzarMemorama(view: View) {
+        val intent: Intent = Intent(this, MemoramaActivity::class.java)
+        startActivity(intent)
     }
 }
