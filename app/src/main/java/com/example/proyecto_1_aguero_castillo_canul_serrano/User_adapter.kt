@@ -13,7 +13,11 @@ class User_adapter(val uCtx: Context,val layoutResId: Int,val userList: List<Use
             val layoutInflater: LayoutInflater= LayoutInflater.from(uCtx)
             val view: View = layoutInflater.inflate(layoutResId, null)
 
+            val txtViewName= view.findViewById<TextView>(R.id.textViewName)
+
             var user= userList[position]
+
+            txtViewName.text= user.userName
 
 
             return view

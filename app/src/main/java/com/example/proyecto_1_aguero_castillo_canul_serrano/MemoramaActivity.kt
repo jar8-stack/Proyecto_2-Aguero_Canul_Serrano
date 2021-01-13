@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_memorama.*
 class MemoramaActivity : AppCompatActivity() {
 
     lateinit var ref: DatabaseReference
+    lateinit var refPerUser: DatabaseReference
     lateinit var userList: MutableList<User_fire>
     lateinit var listView: ListView
 
@@ -31,10 +32,13 @@ class MemoramaActivity : AppCompatActivity() {
                 if(snapshot!!.exists()){
                     for(u in snapshot.children){
                         val user= u.getValue(User_fire::class.java)
+                        if (user != null) {
+                            user.userName= u.key.toString()
+                        }
                         userList.add(user!!)
                     }
 
-                    val adapter= User_adapter(applicationContext, R.layout.activity_memorama, userList)
+                    val adapter= User_adapter(applicationContext, R.layout.users, userList)
                     listView.adapter = adapter
                 }
             }
@@ -59,4 +63,8 @@ class MemoramaActivity : AppCompatActivity() {
         }
 
     }
+}
+
+private fun <E> MutableList<E>.add(element: String) {
+
 }
