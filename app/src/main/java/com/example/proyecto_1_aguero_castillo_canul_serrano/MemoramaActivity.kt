@@ -25,6 +25,7 @@ class MemoramaActivity : AppCompatActivity() {
 
         listView= findViewById(R.id.listUsers)
 
+        //hola mundo
         ref.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot!!.exists()){
