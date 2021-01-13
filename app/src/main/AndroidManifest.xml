@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MemoramaActivity"></activity>
+        <activity android:name=".GameMemoramaActivity"></activity>
+        <activity android:name=".MemoramaActivity" />
         <activity android:name=".PuntajeActivityFinalIndividual" />
         <activity android:name=".PuntajeUsuario" />
         <activity android:name=".PuntajeActivity" />

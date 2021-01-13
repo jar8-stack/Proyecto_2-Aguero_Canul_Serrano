@@ -423,4 +423,7 @@
     <string name="final_1"> Your results :)</string>
     <string name="final_2">You get </string>
     <string name="final_3">correct answers :)</string>
+    <string name="reiniciar">Reinciar</string>
+    <string name="salir">Salir</string>
+    <string name="puntuacion">Puntuación aquí.</string>
 </resources>

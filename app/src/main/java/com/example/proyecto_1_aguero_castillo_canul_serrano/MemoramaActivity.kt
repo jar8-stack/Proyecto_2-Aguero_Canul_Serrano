@@ -24,8 +24,6 @@ class MemoramaActivity : AppCompatActivity() {
         myRef.child("Usuarios").child(userName).child("buscando_partida").setValue("si")
         myRef.child("Usuarios").child(userName).child("puntaje_por_partida").setValue(0)
 
-
-
     }
 }
 
