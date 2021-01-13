@@ -139,6 +139,12 @@ class SelectPlayerActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+            val btnMemorama: Button = findViewById(R.id.btnIniciarMemorama)
+            btnMemorama.setOnClickListener{v ->
+                val text = convert_from_spinner.getSelectedItem().toString();
+                lanzarMemorama(text)
+            }
+
 
 
         }
@@ -593,8 +599,10 @@ class SelectPlayerActivity : AppCompatActivity() {
         db.execSQL("INSERT INTO question_answers(id, text, correct_answer) VALUES(60, '1957', 0);")
     }
 
-    fun lanzarMemorama(view: View) {
-        val intent: Intent = Intent(this, MemoramaActivity::class.java)
+    fun lanzarMemorama(userName: String) {
+        val intent: Intent = Intent(this, MemoramaActivity::class.java).apply {
+            putExtra("userName", userName)
+        }
         startActivity(intent)
     }
 }
