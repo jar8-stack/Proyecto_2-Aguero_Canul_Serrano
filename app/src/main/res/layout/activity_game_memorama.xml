@@ -162,5 +162,48 @@
             android:textSize="25dp"
             android:layout_gravity="center" />
     </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="Jugador 1:"
+            android:id="@+id/jugador1"
+            android:textSize="17dp"
+            android:layout_gravity="center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Puntos(jugador 1):"
+            android:id="@+id/jugador1_points"
+            android:textSize="17dp"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="Jugador 2:"
+            android:id="@+id/jugador2"
+            android:textSize="17dp"
+            android:layout_gravity="center" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Puntos(jugador 2):"
+            android:id="@+id/jugador2_points"
+            android:textSize="17dp"
+            android:layout_gravity="center" />
+    </LinearLayout>
 
 </LinearLayout>
