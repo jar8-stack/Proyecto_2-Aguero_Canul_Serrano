@@ -51,28 +51,35 @@ class MemoramaActivity : AppCompatActivity() {
         //hola mundo
         ref.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot!!.exists()) {
+                if(snapshot!!.exists()){
                     userList.clear()
-                    for (u in snapshot.children) {
-                        val user = u.getValue(User_fire::class.java)
+                    for(u in snapshot.children){
+                        val user= u.getValue(User_fire::class.java)
                         if (user != null) {
-                            user.userName = u.key.toString()
+                            user.userName= u.key.toString()
                         }
                         if (user != null) {
-                            if (user.buscando_partida == "si" && user.userName != userName) {
+                            if(user.buscando_partida=="si" && user.userName != userName){
                                 userList.add(user!!)
                             }
                         }
 
                     }
-                    val adapter = User_adapter(applicationContext, R.layout.users, userList)
+
+                    val adapter= User_adapter(applicationContext, R.layout.users, userList)
                     listView.adapter = adapter
+
+
                 }
             }
+
+
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-        })
+
+
+        });
 
 
         /*
@@ -86,18 +93,14 @@ class MemoramaActivity : AppCompatActivity() {
                 intentMemo2.apply {
                     putExtra("jugador1", user1.toString())
                 }
-
                 if(user1 != null){
                     startActivity(intentMemo2)
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
-
          */
 
         val intentMemo2: Intent = Intent(this, GameMemoramaActivity::class.java).apply {
@@ -117,7 +120,7 @@ class MemoramaActivity : AppCompatActivity() {
                     }
 
                     if(userNameRecibe != null && userNameRecibe!= ""){
-                        //startActivity(intentMemo2)
+                        startActivity(intentMemo2)
                     }
                 }
             }
@@ -141,8 +144,8 @@ class MemoramaActivity : AppCompatActivity() {
                         val mAlertDialog= AlertDialog.Builder(this@MemoramaActivity)
                         mAlertDialog.setTitle("Invitación de partida")
                         mAlertDialog.setMessage(userNameInvita+" te ha invitado a una partida ¿Aceptas?")
-
                         mAlertDialog.setPositiveButton("Si") GameMemoramaActivity@{ dialog, id ->
+
 
                             intentMemo.apply {
                                 putExtra("jugadorOlo", userName)
@@ -153,9 +156,8 @@ class MemoramaActivity : AppCompatActivity() {
                             //globalRef.child("MatchTest").child("user2").setValue(userNameInvita)
                             globalRef.child("MatchTest").child("user1").setValue(userName)
                             globalRef.child("MatchTest").child("user2").setValue(userNameInvita)
-                            globalRef.child("MatchTest").child("ready").setValue("si")
 
-                            //startActivity(intentMemo)
+                            startActivity(intentMemo)
                             return@GameMemoramaActivity
                         }
 
@@ -176,57 +178,7 @@ class MemoramaActivity : AppCompatActivity() {
 
         })
 
-        globalRef.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot!!.exists()) {
-                    //userList.clear()
-                    for (u in snapshot.children) {
-                        val match = u.getValue(Match::class.java)
-                        if (match != null) {
-                            //match.userName = u.key.toString()
-                            if (match.ready == "si") {
-                                val mConfirmDialog= AlertDialog.Builder(this@MemoramaActivity)
-                                mConfirmDialog.setTitle("Confirmar partida")
-                                mConfirmDialog.setMessage("La partida esta lista, entramos?")
 
-                                mConfirmDialog.setPositiveButton("Si") GameMemoramaActivity@{ dialog, id ->
-
-                                    /*
-                                    intentMemo.apply {
-                                        putExtra("jugadorOlo", userName)
-                                        putExtra("jugador1", userName)
-                                        putExtra("jugador2", userNameInvita)
-                                    }*/
-
-                                    //globalRef.child("MatchTest").child("user1").setValue(userName)
-                                    //globalRef.child("MatchTest").child("user2").setValue(userNameInvita)
-                                    //globalRef.child("MatchTest").child("user1").setValue(userName)
-                                    //globalRef.child("MatchTest").child("user2").setValue(userNameInvita)
-                                    //globalRef.child("MatchTest").child("ready").setValue("si")
-
-                                    startActivity(intentMemo)
-                                    return@GameMemoramaActivity
-                                }
-
-                                mConfirmDialog.setNegativeButton("No"){ dialog, id ->
-                                    //refInviEnvi.child(userNameInvita).child("invitaciones_enviadas").setValue("")
-                                    //refInviEnvi.child(userName).child("invitaciones_recibidas").setValue("")
-                                    dialog.dismiss()
-                                }
-
-                                mConfirmDialog.show()
-                            }
-                        }
-
-                    }
-                    val adapter = User_adapter(applicationContext, R.layout.users, userList)
-                    listView.adapter = adapter
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
 
 
         //Hola mundo
@@ -262,7 +214,6 @@ class MemoramaActivity : AppCompatActivity() {
 
     }
 }
-
 
 private operator fun <T> MutableIterable<T>.get(i: Int) {
 

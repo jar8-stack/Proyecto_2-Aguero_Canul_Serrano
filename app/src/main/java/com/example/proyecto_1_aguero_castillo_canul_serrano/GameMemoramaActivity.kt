@@ -1,16 +1,11 @@
 package com.example.proyecto_1_aguero_castillo_canul_serrano
 
-import android.graphics.Color
 import android.media.Image
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_game_memorama.*
-import java.util.*
 
 
 class GameMemoramaActivity : AppCompatActivity() {
@@ -37,6 +32,199 @@ class GameMemoramaActivity : AppCompatActivity() {
     var isFav15 = false;
     var isFav16 = false;
 
+    val cards2 = mutableListOf<Int>()
+    val btnImg2= mutableListOf<Int>()
+
+    //FUNCION TABLERO 2
+    fun rellenar2(dataImage: Int?, dataButton: Int?){
+        if(cards2.size==8 && btnImg2.size== 16){
+            val btn1= findViewById<ImageButton>(btnImg2[0])
+            btn1.setOnClickListener{ v ->
+                isFav = !isFav;
+                if (isFav){
+                    btn1.setImageResource(cards2[0]);
+                }
+                else{
+                    btn1.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn2= findViewById<ImageButton>(btnImg2[1])
+            btn2.setOnClickListener{ v ->
+                isFav2 = !isFav2;
+                if (isFav2){
+                    btn2.setImageResource(cards2[0]);
+                }
+                else{
+                    btn2.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn3= findViewById<ImageButton>(btnImg2[2])
+            btn3.setOnClickListener{ v ->
+                isFav3 = !isFav3;
+                if (isFav3){
+                    btn3.setImageResource(cards2[1]);
+                }
+                else{
+                    btn3.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn4= findViewById<ImageButton>(btnImg2[3])
+            btn4.setOnClickListener{ v ->
+                isFav4 = !isFav4;
+                if (isFav4){
+                    btn4.setImageResource(cards2[1]);
+                }
+                else{
+                    btn4.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn5= findViewById<ImageButton>(btnImg2[4])
+            btn5.setOnClickListener{ v ->
+                isFav5 = !isFav5;
+                if (isFav5){
+                    btn5.setImageResource(cards2[2]);
+                }
+                else{
+                    btn5.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn6= findViewById<ImageButton>(btnImg2[5])
+            btn6.setOnClickListener{ v ->
+                isFav6 = !isFav6;
+                if (isFav6){
+                    btn6.setImageResource(cards2[2]);
+                }
+                else{
+                    btn6.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn7= findViewById<ImageButton>(btnImg2[6])
+            btn7.setOnClickListener{ v ->
+                isFav7 = !isFav7;
+                if (isFav7){
+                    btn7.setImageResource(cards2[3]);
+                }
+                else{
+                    btn7.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn8= findViewById<ImageButton>(btnImg2[7])
+            btn8.setOnClickListener{ v ->
+                isFav8 = !isFav8;
+                if (isFav8){
+                    btn8.setImageResource(cards2[3]);
+                }
+                else{
+                    btn8.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn9= findViewById<ImageButton>(btnImg2[8])
+            btn9.setOnClickListener{ v ->
+                isFav9 = !isFav9;
+                if (isFav9){
+                    btn9.setImageResource(cards2[4]);
+                }
+                else{
+                    btn9.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn10= findViewById<ImageButton>(btnImg2[9])
+            btn10.setOnClickListener{ v ->
+                isFav10 = !isFav10;
+                if (isFav10){
+                    btn10.setImageResource(cards2[4]);
+                }
+                else{
+                    btn10.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn11= findViewById<ImageButton>(btnImg2[10])
+            btn11.setOnClickListener{ v ->
+                isFav11 = !isFav11;
+                if (isFav11){
+                    btn11.setImageResource(cards2[5]);
+                }
+                else{
+                    btn11.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn12= findViewById<ImageButton>(btnImg2[11])
+            btn12.setOnClickListener{ v ->
+                isFav12 = !isFav12;
+                if (isFav12){
+                    btn12.setImageResource(cards2[5]);
+                }
+                else{
+                    btn12.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn13= findViewById<ImageButton>(btnImg2[12])
+            btn13.setOnClickListener{ v ->
+                isFav13 = !isFav13;
+                if (isFav13){
+                    btn13.setImageResource(cards2[6]);
+                }
+                else{
+                    btn13.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn14= findViewById<ImageButton>(btnImg2[13])
+            btn14.setOnClickListener{ v ->
+                isFav14 = !isFav14;
+                if (isFav14){
+                    btn14.setImageResource(cards2[6]);
+                }
+                else{
+                    btn14.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn15= findViewById<ImageButton>(btnImg2[14])
+            btn15.setOnClickListener{ v ->
+                isFav15 = !isFav15;
+                if (isFav15){
+                    btn15.setImageResource(cards2[7]);
+                }
+                else{
+                    btn15.setImageResource(R.drawable.fondo);
+                }
+            }
+
+            val btn16= findViewById<ImageButton>(btnImg2[15])
+            btn16.setOnClickListener{ v ->
+                isFav16 = !isFav16;
+                if (isFav16){
+                    btn16.setImageResource(cards2[7]);
+                }
+                else{
+                    btn16.setImageResource(R.drawable.fondo);
+                }
+            }
+        }else{
+            if(dataImage != null){
+                cards2.add(dataImage)
+            }
+
+            if(dataButton != null){
+                btnImg2.add(dataButton)
+            }
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_memorama)
@@ -56,7 +244,58 @@ class GameMemoramaActivity : AppCompatActivity() {
         refInviEnvi.child(jugador2).child("invitaciones_enviadas").setValue("")
         refInviEnvi.child(jugador1).child("invitaciones_recibidas").setValue("")
 
+        refTablero = FirebaseDatabase.getInstance().getReference("Tablero")
 
+
+
+
+
+
+        refTablero.child("imagenes").addChildEventListener(object: ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                rellenar2(null, snapshot.value as Int?)
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        refTablero.child("botones").addChildEventListener(object: ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                rellenar2(snapshot.value as Int, null)
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
 
 
@@ -72,7 +311,7 @@ class GameMemoramaActivity : AppCompatActivity() {
                 R.drawable.la6,
                 R.drawable.la7
             )
-            //hola
+
             val btnImg= intArrayOf(
                 R.id.boton00,
                 R.id.boton01,
@@ -278,235 +517,9 @@ class GameMemoramaActivity : AppCompatActivity() {
             for(j in 0..15){
                 refTablero.child("botones").child("btn"+j).setValue(btnImg[j])
             }
-        }else if(jugadorOlo == jugador2){
-
-
-
-            refTablero = FirebaseDatabase.getInstance().getReference("Tablero")
-
-            val cards = mutableListOf<Int>()
-            val btnImg= mutableListOf<Int>()
-
-
-
-
-
-
-            refTablero.child("botones").addValueEventListener(object: ValueEventListener{
-                override fun onDataChange(snapshot1: DataSnapshot) {
-                    if(snapshot1!!.exists()){
-                        for(btn in snapshot1.children){
-                            val btnId= btn.value
-                            btnImg.add(btnId as Int)
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-
-            refTablero.child("imagenes").addValueEventListener(object: ValueEventListener{
-                override fun onDataChange(snapshot2: DataSnapshot) {
-                    if(snapshot2!!.exists()){
-                        for(img in snapshot2.children){
-                            val imgId= img.value
-                            cards.add(imgId as Int)
-
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-
-
-            val btn1= findViewById<ImageButton>(btnImg[0])
-            btn1.setOnClickListener{ v ->
-                isFav = !isFav;
-                if (isFav){
-                    btn1.setImageResource(cards[0]);
-                }
-                else{
-                    btn1.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn2= findViewById<ImageButton>(btnImg[1])
-            btn2.setOnClickListener{ v ->
-                isFav2 = !isFav2;
-                if (isFav2){
-                    btn2.setImageResource(cards[0]);
-                }
-                else{
-                    btn2.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn3= findViewById<ImageButton>(btnImg[2])
-            btn3.setOnClickListener{ v ->
-                isFav3 = !isFav3;
-                if (isFav3){
-                    btn3.setImageResource(cards[1]);
-                }
-                else{
-                    btn3.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn4= findViewById<ImageButton>(btnImg[3])
-            btn4.setOnClickListener{ v ->
-                isFav4 = !isFav4;
-                if (isFav4){
-                    btn4.setImageResource(cards[1]);
-                }
-                else{
-                    btn4.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn5= findViewById<ImageButton>(btnImg[4])
-            btn5.setOnClickListener{ v ->
-                isFav5 = !isFav5;
-                if (isFav5){
-                    btn5.setImageResource(cards[2]);
-                }
-                else{
-                    btn5.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn6= findViewById<ImageButton>(btnImg[5])
-            btn6.setOnClickListener{ v ->
-                isFav6 = !isFav6;
-                if (isFav6){
-                    btn6.setImageResource(cards[2]);
-                }
-                else{
-                    btn6.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn7= findViewById<ImageButton>(btnImg[6])
-            btn7.setOnClickListener{ v ->
-                isFav7 = !isFav7;
-                if (isFav7){
-                    btn7.setImageResource(cards[3]);
-                }
-                else{
-                    btn7.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn8= findViewById<ImageButton>(btnImg[7])
-            btn8.setOnClickListener{ v ->
-                isFav8 = !isFav8;
-                if (isFav8){
-                    btn8.setImageResource(cards[3]);
-                }
-                else{
-                    btn8.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn9= findViewById<ImageButton>(btnImg[8])
-            btn9.setOnClickListener{ v ->
-                isFav9 = !isFav9;
-                if (isFav9){
-                    btn9.setImageResource(cards[4]);
-                }
-                else{
-                    btn9.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn10= findViewById<ImageButton>(btnImg[9])
-            btn10.setOnClickListener{ v ->
-                isFav10 = !isFav10;
-                if (isFav10){
-                    btn10.setImageResource(cards[4]);
-                }
-                else{
-                    btn10.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn11= findViewById<ImageButton>(btnImg[10])
-            btn11.setOnClickListener{ v ->
-                isFav11 = !isFav11;
-                if (isFav11){
-                    btn11.setImageResource(cards[5]);
-                }
-                else{
-                    btn11.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn12= findViewById<ImageButton>(btnImg[11])
-            btn12.setOnClickListener{ v ->
-                isFav12 = !isFav12;
-                if (isFav12){
-                    btn12.setImageResource(cards[5]);
-                }
-                else{
-                    btn12.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn13= findViewById<ImageButton>(btnImg[12])
-            btn13.setOnClickListener{ v ->
-                isFav13 = !isFav13;
-                if (isFav13){
-                    btn13.setImageResource(cards[6]);
-                }
-                else{
-                    btn13.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn14= findViewById<ImageButton>(btnImg[13])
-            btn14.setOnClickListener{ v ->
-                isFav14 = !isFav14;
-                if (isFav14){
-                    btn14.setImageResource(cards[6]);
-                }
-                else{
-                    btn14.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn15= findViewById<ImageButton>(btnImg[14])
-            btn15.setOnClickListener{ v ->
-                isFav15 = !isFav15;
-                if (isFav15){
-                    btn15.setImageResource(cards[7]);
-                }
-                else{
-                    btn15.setImageResource(R.drawable.fondo);
-                }
-            }
-
-            val btn16= findViewById<ImageButton>(btnImg[15])
-            btn16.setOnClickListener{ v ->
-                isFav16 = !isFav16;
-                if (isFav16){
-                    btn16.setImageResource(cards[7]);
-                }
-                else{
-                    btn16.setImageResource(R.drawable.fondo);
-                }
-            }
-
-
         }
 
 
 
     }
 }
-
