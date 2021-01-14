@@ -22,6 +22,7 @@ class MemoramaActivity : AppCompatActivity() {
     lateinit var listView: ListView
     lateinit var refBack: DatabaseReference
     lateinit var refInviEnvi: DatabaseReference
+    lateinit var refReciEnvi: DatabaseReference
     lateinit var globalRef : DatabaseReference
 
     override fun onBackPressed() {
@@ -80,6 +81,8 @@ class MemoramaActivity : AppCompatActivity() {
 
         });
 
+
+        /*
         val intentMemo2: Intent = Intent(this, GameMemoramaActivity::class.java).apply {
             putExtra("jugador2", userName)
             putExtra("jugadorOlo", userName)
@@ -102,7 +105,35 @@ class MemoramaActivity : AppCompatActivity() {
 
         })
 
+         */
 
+        val intentMemo2: Intent = Intent(this, GameMemoramaActivity::class.java).apply {
+            putExtra("jugador2", userName)
+            putExtra("jugadorOlo", userName)
+        }
+        refReciEnvi= FirebaseDatabase.getInstance().getReference("Usuarios")
+        refReciEnvi.child(userName).child("invitaciones_enviadas").addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userNameRecibe=""
+                if(snapshot!!.exists()){
+                    userNameRecibe += snapshot.value
+                    if(userNameRecibe != ""){
+                        intentMemo2.apply {
+                            putExtra("jugador1", userNameRecibe)
+                        }
+                    }
+
+                    if(userNameRecibe != null && userNameRecibe!= ""){
+                        startActivity(intentMemo2)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
         val intentMemo: Intent = Intent(this, GameMemoramaActivity::class.java)
         refInviEnvi = FirebaseDatabase.getInstance().getReference("Usuarios")

@@ -279,10 +279,16 @@ class GameMemoramaActivity : AppCompatActivity() {
                 refTablero.child("botones").child("btn"+j).setValue(btnImg[j])
             }
         }else if(jugadorOlo == jugador2){
+
+
+
             refTablero = FirebaseDatabase.getInstance().getReference("Tablero")
 
             val cards = mutableListOf<Int>()
             val btnImg= mutableListOf<Int>()
+
+
+
 
             refTablero.child("imagenes").addValueEventListener(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -312,6 +318,7 @@ class GameMemoramaActivity : AppCompatActivity() {
                 }
 
             })
+
 
             val btn1= findViewById<ImageButton>(btnImg[0])
             btn1.setOnClickListener{ v ->
