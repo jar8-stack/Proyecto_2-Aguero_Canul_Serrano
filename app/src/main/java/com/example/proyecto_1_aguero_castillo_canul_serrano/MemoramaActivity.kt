@@ -22,7 +22,7 @@ class MemoramaActivity : AppCompatActivity() {
     lateinit var listView: ListView
     lateinit var refBack: DatabaseReference
     lateinit var refInviEnvi: DatabaseReference
-
+    lateinit var globalRef : DatabaseReference
 
     override fun onBackPressed() {
         refBack = FirebaseDatabase.getInstance().getReference("Usuarios")
@@ -42,7 +42,7 @@ class MemoramaActivity : AppCompatActivity() {
         var userName= intent.getStringExtra("userName")
 
         ref = FirebaseDatabase.getInstance().getReference("Usuarios")
-
+        globalRef = FirebaseDatabase.getInstance().getReference("Partidas en vivo")
 
 
         listView= findViewById(R.id.listUsers)
@@ -107,7 +107,7 @@ class MemoramaActivity : AppCompatActivity() {
                                 putExtra("jugador2", userNameInvita)
                             }
 
-
+                            globalRef.child("MatchTest").child("user1").setValue(userName)
                             startActivity(intentMemo)
                             return@GameMemoramaActivity
                         }
