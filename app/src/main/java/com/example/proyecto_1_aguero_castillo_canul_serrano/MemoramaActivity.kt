@@ -87,6 +87,8 @@ class MemoramaActivity : AppCompatActivity() {
 
         val intentMemo: Intent = Intent(this, GameMemoramaActivity::class.java)
         refInviEnvi = FirebaseDatabase.getInstance().getReference("Usuarios")
+        //sistma de confirmaciónes
+        val refConfir= FirebaseDatabase.getInstance().getReference("Usuarios")
         refInviEnvi.child(userName).child("invitaciones_recibidas").addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var userNameInvita=""
@@ -101,11 +103,8 @@ class MemoramaActivity : AppCompatActivity() {
                         mAlertDialog.setPositiveButton("Si") GameMemoramaActivity@{ dialog, id ->
 
 
-                            //sistma de confirmaciónes
-                            val refConfir= FirebaseDatabase.getInstance().getReference("Usuarios")
+
                             refConfir.child(userNameInvita).child("invitaciones_enviadas").child(userName).child("confirma").setValue("si")
-
-
 
                             startActivity(intentMemo)
                             return@GameMemoramaActivity
