@@ -15,6 +15,9 @@ class GameMemoramaActivity : AppCompatActivity() {
     lateinit var jugador1Text: TextView
     lateinit var jugador2Text: TextView
     lateinit var refInviEnvi: DatabaseReference
+
+    var isFav = false;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_memorama)
@@ -34,6 +37,15 @@ class GameMemoramaActivity : AppCompatActivity() {
         refInviEnvi.child(jugador1).child("invitaciones_recibidas").setValue("")
 
 
-        boton00.setBackgroundResource(R.drawable.fondo);
+        //boton00.setBackgroundResource(R.drawable.fondo);
+        boton00.setOnClickListener{ v ->
+            isFav = !isFav;
+            if (isFav){
+                boton00.setImageResource(R.drawable.la0);
+            }
+            else{
+                boton00.setImageResource(R.drawable.fondo);
+            }
+        }
     }
 }
