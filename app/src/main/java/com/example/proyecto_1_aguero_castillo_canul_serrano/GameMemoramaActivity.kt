@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_game_memorama.*
 
 
@@ -28,8 +29,9 @@ class GameMemoramaActivity : AppCompatActivity() {
         jugador1Text.setText(jugador1)
         jugador2Text.setText(jugador2)
 
-        //refInviEnvi.child(jugador2).child("invitaciones_enviadas").setValue("")
-        //refInviEnvi.child(jugador1).child("invitaciones_recibidas").setValue("")
+        refInviEnvi = FirebaseDatabase.getInstance().getReference("Usuarios")
+        refInviEnvi.child(jugador2).child("invitaciones_enviadas").setValue("")
+        refInviEnvi.child(jugador1).child("invitaciones_recibidas").setValue("")
 
 
         boton00.setBackgroundResource(R.drawable.fondo);
