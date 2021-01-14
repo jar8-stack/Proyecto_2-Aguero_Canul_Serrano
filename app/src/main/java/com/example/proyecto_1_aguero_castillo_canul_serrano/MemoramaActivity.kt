@@ -87,21 +87,25 @@ class MemoramaActivity : AppCompatActivity() {
                 if(snapshot!!.exists()){
 
                     userNameInvita+= snapshot.value
-                    val mAlertDialog= AlertDialog.Builder(this@MemoramaActivity)
-                    mAlertDialog.setTitle("Invitación de partida")
-                    mAlertDialog.setMessage(userNameInvita+" te ha invitado a una partida ¿Aceptas?")
-                    mAlertDialog.setPositiveButton("Si") GameMemoramaActivity@{ dialog, id ->
+
+                    if(userNameInvita != ""){
+                        val mAlertDialog= AlertDialog.Builder(this@MemoramaActivity)
+                        mAlertDialog.setTitle("Invitación de partida")
+                        mAlertDialog.setMessage(userNameInvita+" te ha invitado a una partida ¿Aceptas?")
+                        mAlertDialog.setPositiveButton("Si") GameMemoramaActivity@{ dialog, id ->
 
 
-                        return@GameMemoramaActivity
+                            return@GameMemoramaActivity
+                        }
+
+                        mAlertDialog.setNegativeButton("No"){ dialog, id ->
+                            refInviEnvi.child(userNameInvita).child("invitaciones_enviadas").setValue("")
+                            refInviEnvi.child(userName).child("invitaciones_recibidas").setValue("")
+                            dialog.dismiss()
+                        }
+
+                        mAlertDialog.show()
                     }
-
-                    mAlertDialog.setNegativeButton("No"){ dialog, id ->
-                        refInviEnvi.child(userNameInvita).child("invitaciones_enviadas").setValue("")
-                        dialog.dismiss()
-                    }
-
-                    mAlertDialog.show()
                 }
             }
 
