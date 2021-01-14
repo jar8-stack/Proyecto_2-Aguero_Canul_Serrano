@@ -108,6 +108,7 @@ class MemoramaActivity : AppCompatActivity() {
                             }
 
                             globalRef.child("MatchTest").child("user1").setValue(userName)
+                            globalRef.child("MatchTest").child("user2").setValue(userNameInvita)
                             startActivity(intentMemo)
                             return@GameMemoramaActivity
                         }
