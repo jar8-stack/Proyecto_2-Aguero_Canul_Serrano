@@ -80,6 +80,32 @@ class MemoramaActivity : AppCompatActivity() {
 
         });
 
+        refInviEnvi = FirebaseDatabase.getInstance().getReference("Usuarios")
+        refInviEnvi.child(userName).child("invitaciones_recibidas").addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val mAlertDialog= AlertDialog.Builder(this@MemoramaActivity)
+                mAlertDialog.setTitle("Invitación de partida")
+                mAlertDialog.setMessage(" te ha invitado a una partida ¿Aceptas?")
+                mAlertDialog.setPositiveButton("Si") GameMemoramaActivity@{ dialog, id ->
+
+
+                    return@GameMemoramaActivity
+                }
+
+                mAlertDialog.setNegativeButton("No"){ dialog, id ->
+                    //refInviEnvi.child(userNameInvi).child("invitaciones_enviadas").setValue("")
+                    dialog.dismiss()
+                }
+
+                mAlertDialog.show()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
 
 
 
@@ -108,34 +134,6 @@ class MemoramaActivity : AppCompatActivity() {
 
                 refInviEnvi.child(userNameInvi).child("invitaciones_recibidas").setValue(userName)
                 refInviEnvi.child(userName).child("invitaciones_enviadas").setValue(userNameInvi)
-
-
-                refInviEnvi.child(userName).child("invitaciones_recibidas").addValueEventListener(object: ValueEventListener{
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val mAlertDialog= AlertDialog.Builder(this@MemoramaActivity)
-                        mAlertDialog.setTitle("Invitación de partida")
-                        mAlertDialog.setMessage(userNameInvi+" te ha invitado a una partida ¿Aceptas?")
-                        mAlertDialog.setPositiveButton("Si") GameMemoramaActivity@{ dialog, id ->
-
-
-                            return@GameMemoramaActivity
-                        }
-
-                        mAlertDialog.setNegativeButton("No"){ dialog, id ->
-                            refInviEnvi.child(userNameInvi).child("invitaciones_enviadas").setValue("")
-                            dialog.dismiss()
-                        }
-
-                        mAlertDialog.show()
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
-
-
 
             }
         }
