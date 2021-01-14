@@ -83,21 +83,26 @@ class MemoramaActivity : AppCompatActivity() {
         refInviEnvi = FirebaseDatabase.getInstance().getReference("Usuarios")
         refInviEnvi.child(userName).child("invitaciones_recibidas").addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                val mAlertDialog= AlertDialog.Builder(this@MemoramaActivity)
-                mAlertDialog.setTitle("Invitación de partida")
-                mAlertDialog.setMessage(" te ha invitado a una partida ¿Aceptas?")
-                mAlertDialog.setPositiveButton("Si") GameMemoramaActivity@{ dialog, id ->
+                var userNameInvita=""
+                if(snapshot!!.exists()){
+
+                    userNameInvita+= snapshot.value
+                    val mAlertDialog= AlertDialog.Builder(this@MemoramaActivity)
+                    mAlertDialog.setTitle("Invitación de partida")
+                    mAlertDialog.setMessage(userNameInvita+" te ha invitado a una partida ¿Aceptas?")
+                    mAlertDialog.setPositiveButton("Si") GameMemoramaActivity@{ dialog, id ->
 
 
-                    return@GameMemoramaActivity
+                        return@GameMemoramaActivity
+                    }
+
+                    mAlertDialog.setNegativeButton("No"){ dialog, id ->
+                        refInviEnvi.child(userNameInvita).child("invitaciones_enviadas").setValue("")
+                        dialog.dismiss()
+                    }
+
+                    mAlertDialog.show()
                 }
-
-                mAlertDialog.setNegativeButton("No"){ dialog, id ->
-                    //refInviEnvi.child(userNameInvi).child("invitaciones_enviadas").setValue("")
-                    dialog.dismiss()
-                }
-
-                mAlertDialog.show()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -143,6 +148,16 @@ class MemoramaActivity : AppCompatActivity() {
     }
 }
 
+private operator fun <T> MutableIterable<T>.get(i: Int) {
+
+}
+
+
 private fun <E> MutableList<E>.add(element: String) {
 
+}
+data class userInivita(var keyPrio: String, val username: String) {
+    constructor() : this("", ""){
+
+    }
 }
