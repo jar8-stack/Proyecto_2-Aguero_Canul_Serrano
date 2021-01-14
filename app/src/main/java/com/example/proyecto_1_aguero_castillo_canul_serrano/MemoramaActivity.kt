@@ -80,6 +80,7 @@ class MemoramaActivity : AppCompatActivity() {
 
         });
 
+        val intentMemo: Intent = Intent(this, GameMemoramaActivity::class.java)
         refInviEnvi = FirebaseDatabase.getInstance().getReference("Usuarios")
         refInviEnvi.child(userName).child("invitaciones_recibidas").addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -95,6 +96,7 @@ class MemoramaActivity : AppCompatActivity() {
                         mAlertDialog.setPositiveButton("Si") GameMemoramaActivity@{ dialog, id ->
 
 
+                            startActivity(intentMemo)
                             return@GameMemoramaActivity
                         }
 
