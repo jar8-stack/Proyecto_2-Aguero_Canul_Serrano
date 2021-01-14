@@ -127,7 +127,9 @@ class MemoramaActivity : AppCompatActivity() {
                                 putExtra("jugador2", userNameInvita)
                             }
 
-                            globalRef.child("MatchTest").child(userName).child("Puntuacion").setValue(0)
+                            globalRef.child("MatchTest").child("user1").setValue(userName)
+                            globalRef.child("MatchTest").child("user2").setValue(userNameInvita)
+
 
                             startActivity(intentMemo)
                             return@GameMemoramaActivity
