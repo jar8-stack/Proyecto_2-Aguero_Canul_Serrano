@@ -104,10 +104,7 @@ class MemoramaActivity : AppCompatActivity() {
 
 
 
-        val intentMemo: Intent = Intent(this, GameMemoramaActivity::class.java).apply {
-            putExtra("jugadorOlo", userName)
-            putExtra("jugador1", userName)
-        }
+        val intentMemo: Intent = Intent(this, GameMemoramaActivity::class.java)
         refInviEnvi = FirebaseDatabase.getInstance().getReference("Usuarios")
         refInviEnvi.child(userName).child("invitaciones_recibidas").addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -124,12 +121,14 @@ class MemoramaActivity : AppCompatActivity() {
 
 
                             intentMemo.apply {
+                                putExtra("jugadorOlo", userName)
+                                putExtra("jugador1", userName)
                                 putExtra("jugador2", userNameInvita)
                             }
-
+                            //globalRef.child("MatchTest").child("user1").setValue(userName)
+                            //globalRef.child("MatchTest").child("user2").setValue(userNameInvita)
                             globalRef.child("MatchTest").child("user1").setValue(userName)
                             globalRef.child("MatchTest").child("user2").setValue(userNameInvita)
-
 
                             startActivity(intentMemo)
                             return@GameMemoramaActivity
