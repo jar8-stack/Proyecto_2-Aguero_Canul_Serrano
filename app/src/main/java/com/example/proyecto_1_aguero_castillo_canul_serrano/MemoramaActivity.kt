@@ -89,7 +89,10 @@ class MemoramaActivity : AppCompatActivity() {
                 var user1= snapshot.child("user1").value
                 intentMemo2.apply {
                     putExtra("jugador1", user1.toString())
-                    startActivity(intentMemo2)
+
+                    if(user1 != null){
+                      startActivity(intentMemo2)
+                    }
                 }
             }
 
