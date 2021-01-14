@@ -9,12 +9,16 @@ class GameMemoramaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_memorama)
 
+        /*
+
         var jugador1= intent.getStringExtra("jugador1")
         var jugador2= intent.getStringExtra("jugador2")
 
         //sistma de confirmaciónes
         val refConfir= FirebaseDatabase.getInstance().getReference("Usuarios")
         refConfir.child(jugador2).child("invitaciones_enviadas").child(jugador1).child("confirma").setValue("si")
+        */
+
 
 
     }
