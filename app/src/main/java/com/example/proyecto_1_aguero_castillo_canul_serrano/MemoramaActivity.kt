@@ -80,8 +80,23 @@ class MemoramaActivity : AppCompatActivity() {
 
         });
 
+        val intentMemo2: Intent = Intent(this, GameMemoramaActivity::class.java).apply {
+            putExtra("jugador2", userName)
+        }
+        globalRef.child("MatchTest").addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var user1= snapshot.child("user1").value
+                intentMemo2.apply {
+                    putExtra("jugador1", user1.toString())
+                    startActivity(intentMemo2)
+                }
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
 
+        })
 
 
 
@@ -109,6 +124,8 @@ class MemoramaActivity : AppCompatActivity() {
 
                             globalRef.child("MatchTest").child("user1").setValue(userName)
                             globalRef.child("MatchTest").child("user2").setValue(userNameInvita)
+
+
                             startActivity(intentMemo)
                             return@GameMemoramaActivity
                         }
