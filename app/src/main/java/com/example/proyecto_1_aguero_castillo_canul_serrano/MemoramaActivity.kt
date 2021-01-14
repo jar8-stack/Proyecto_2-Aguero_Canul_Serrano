@@ -81,24 +81,18 @@ class MemoramaActivity : AppCompatActivity() {
         });
 
         val intentMemo2: Intent = Intent(this, GameMemoramaActivity::class.java).apply {
-            putExtra("jugador1", userName)
+            putExtra("jugador2", userName)
             putExtra("jugadorOlo", userName)
         }
         globalRef.child("MatchTest").addValueEventListener(object: ValueEventListener{
-            var user1= ""
             override fun onDataChange(snapshot: DataSnapshot) {
-                for(usr in snapshot.children){
-                    user1= usr.key.toString()
+                var user1= snapshot.child("user1").value
+                intentMemo2.apply {
+                    putExtra("jugador1", user1.toString())
                 }
 
-
-
-                intentMemo2.apply {
-                    putExtra("jugador2", user1.toString())
-
-                    if(user1 != null){
-                      startActivity(intentMemo2)
-                    }
+                if(user1 != null){
+                    startActivity(intentMemo2)
                 }
             }
 
@@ -161,14 +155,14 @@ class MemoramaActivity : AppCompatActivity() {
 
 
 
-            //Hola mundo
-            val database = Firebase.database
-            val myRef = database.getReference()
-            var usuarios= database.getReference("users_waiting")
+        //Hola mundo
+        val database = Firebase.database
+        val myRef = database.getReference()
+        var usuarios= database.getReference("users_waiting")
 
-            //myRef.setValue("Hello "+userName.toString())
-            myRef.child("Usuarios").child(userName).child("buscando_partida").setValue("si")
-            myRef.child("Usuarios").child(userName).child("puntaje_por_partida").setValue(0)
+        //myRef.setValue("Hello "+userName.toString())
+        myRef.child("Usuarios").child(userName).child("buscando_partida").setValue("si")
+        myRef.child("Usuarios").child(userName).child("puntaje_por_partida").setValue(0)
 
         listView.onItemClickListener = object : AdapterView.OnItemClickListener{
             override fun onItemClick(
