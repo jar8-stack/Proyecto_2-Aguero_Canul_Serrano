@@ -72,7 +72,7 @@ class GameMemoramaActivity : AppCompatActivity() {
                 R.drawable.la6,
                 R.drawable.la7
             )
-
+            //hola
             val btnImg= intArrayOf(
                 R.id.boton00,
                 R.id.boton01,
