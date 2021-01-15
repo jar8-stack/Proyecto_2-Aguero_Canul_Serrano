@@ -14,8 +14,8 @@ class GameMemoramaActivity : AppCompatActivity() {
     lateinit var jugador2Text: TextView
     lateinit var refInviEnvi: DatabaseReference
     lateinit var refTablero: DatabaseReference
-    lateinit var refCarta: DatabaseReference
-    lateinit var  refBoton: DatabaseReference
+    var refCarta: DatabaseReference = FirebaseDatabase.getInstance().getReference("Carta_jugada")
+    var refBoton: DatabaseReference = FirebaseDatabase.getInstance().getReference("Boton_apretado")
     lateinit var imgRandom: Image
 
 
@@ -368,12 +368,16 @@ class GameMemoramaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_memorama)
-
+        btnPressed = findViewById(R.id.boton00)
 
         refCarta.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var imgInt = (snapshot.value as Long).toInt()
-                btnPressed.setImageResource(imgInt)
+                if(snapshot.value!= null){
+                    var imgInt = (snapshot.value as Long).toInt()
+                    btnPressed.setImageResource(imgInt)
+                }
+
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -384,8 +388,10 @@ class GameMemoramaActivity : AppCompatActivity() {
 
         refBoton.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var btnInt = (snapshot.value as Long).toInt()
-                btnPressed= findViewById<ImageButton>(btnInt)
+                if(snapshot.value!= null) {
+                    var btnInt = (snapshot.value as Long).toInt()
+                    btnPressed = findViewById<ImageButton>(btnInt)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -506,17 +512,13 @@ class GameMemoramaActivity : AppCompatActivity() {
             btn1.setOnClickListener{ v ->
                 isFav = !isFav;
                 if (isFav){
-                    btn1.setImageResource(cards[0]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
+                    btn1.setImageResource(cards[0])
                     refCarta.setValue(cards[0])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn1.id)
                 }
                 else{
                     btn1.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn1.id)
                 }
             }
@@ -526,16 +528,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav2 = !isFav2;
                 if (isFav2){
                     btn2.setImageResource(cards[0]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[0])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn2.id)
                 }
                 else{
                     btn2.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn2.id)
                 }
             }
@@ -544,17 +542,13 @@ class GameMemoramaActivity : AppCompatActivity() {
             btn3.setOnClickListener{ v ->
                 isFav3 = !isFav3;
                 if (isFav3){
-                    btn3.setImageResource(cards[1]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
-                    refCarta.setValue(cards[1])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
+                    btn3.setImageResource(cards[2]);
+                    refCarta.setValue(cards[2])
                     refBoton.setValue(btn3.id)
                 }
                 else{
                     btn3.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn3.id)
                 }
             }
@@ -564,35 +558,28 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav4 = !isFav4;
                 if (isFav4){
                     btn4.setImageResource(cards[1]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[1])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn4.id)
                 }
                 else{
                     btn4.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn4.id)
                 }
             }
 
             val btn5= findViewById<ImageButton>(btnImg[4])
+
             btn5.setOnClickListener{ v ->
                 isFav5 = !isFav5;
                 if (isFav5){
                     btn5.setImageResource(cards[2]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[2])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn5.id)
                 }
                 else{
                     btn5.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn5.id)
                 }
             }
@@ -602,16 +589,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav6 = !isFav6;
                 if (isFav6){
                     btn6.setImageResource(cards[2]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[2])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn6.id)
                 }
                 else{
                     btn6.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn6.id)
                 }
             }
@@ -621,16 +604,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav7 = !isFav7;
                 if (isFav7){
                     btn7.setImageResource(cards[3]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[3])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn7.id)
                 }
                 else{
                     btn7.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn7.id)
                 }
             }
@@ -640,16 +619,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav8 = !isFav8;
                 if (isFav8){
                     btn8.setImageResource(cards[3]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[3])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn8.id)
                 }
                 else{
                     btn8.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn8.id)
                 }
             }
@@ -659,16 +634,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav9 = !isFav9;
                 if (isFav9){
                     btn9.setImageResource(cards[4]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[4])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn9.id)
                 }
                 else{
                     btn9.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn9.id)
                 }
             }
@@ -678,16 +649,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav10 = !isFav10;
                 if (isFav10){
                     btn10.setImageResource(cards[4]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[4])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn10.id)
                 }
                 else{
                     btn10.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn10.id)
                 }
             }
@@ -697,16 +664,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav11 = !isFav11;
                 if (isFav11){
                     btn11.setImageResource(cards[5]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[5])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn11.id)
                 }
                 else{
                     btn11.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn11.id)
                 }
             }
@@ -716,16 +679,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav12 = !isFav12;
                 if (isFav12){
                     btn12.setImageResource(cards[5]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[5])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn12.id)
                 }
                 else{
                     btn12.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn12.id)
                 }
             }
@@ -735,16 +694,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav13 = !isFav13;
                 if (isFav13){
                     btn13.setImageResource(cards[6]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[6])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn13.id)
                 }
                 else{
                     btn13.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn13.id)
                 }
             }
@@ -754,16 +709,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav14 = !isFav14;
                 if (isFav14){
                     btn14.setImageResource(cards[6]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[6])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn14.id)
                 }
                 else{
                     btn14.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn14.id)
                 }
             }
@@ -773,16 +724,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav15 = !isFav15;
                 if (isFav15){
                     btn15.setImageResource(cards[7]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[7])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn15.id)
                 }
                 else{
                     btn15.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn15.id)
                 }
             }
@@ -792,16 +739,12 @@ class GameMemoramaActivity : AppCompatActivity() {
                 isFav16 = !isFav16;
                 if (isFav16){
                     btn16.setImageResource(cards[7]);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(cards[7])
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn16.id)
                 }
                 else{
                     btn16.setImageResource(R.drawable.fondo);
-                    refCarta= FirebaseDatabase.getInstance().getReference("Carta_jugada")
                     refCarta.setValue(R.drawable.fondo)
-                    refBoton= FirebaseDatabase.getInstance().getReference("Boton_apretado")
                     refBoton.setValue(btn16.id)
                 }
             }
