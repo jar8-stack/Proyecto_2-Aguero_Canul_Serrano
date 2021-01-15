@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
 
 
+
 class GameMemoramaActivity : AppCompatActivity() {
     lateinit var jugador1Text: TextView
     lateinit var jugador2Text: TextView
@@ -37,6 +38,16 @@ class GameMemoramaActivity : AppCompatActivity() {
 
     //FUNCION TABLERO 2
     fun rellenar2(dataImage: Int?, dataButton: Int?){
+
+            if(dataImage != null){
+                cards2.add(dataImage)
+            }
+
+            if(dataButton != null){
+                btnImg2.add(dataButton)
+
+            }
+
         if(cards2.size==8 && btnImg2.size== 16){
             val btn1= findViewById<ImageButton>(btnImg2[0])
             btn1.setOnClickListener{ v ->
@@ -213,16 +224,11 @@ class GameMemoramaActivity : AppCompatActivity() {
                     btn16.setImageResource(R.drawable.fondo);
                 }
             }
-        }else{
-            if(dataImage != null){
-                cards2.add(dataImage)
-            }
-
-            if(dataButton != null){
-                btnImg2.add(dataButton)
-            }
         }
+
     }
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -251,9 +257,11 @@ class GameMemoramaActivity : AppCompatActivity() {
 
 
 
-        refTablero.child("imagenes").addChildEventListener(object: ChildEventListener{
+        refTablero.child("imagenes").addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                rellenar2(null, snapshot.value as Int?)
+                var imgInt = (snapshot.value as Long).toInt()
+
+                rellenar2(imgInt, null)
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -274,9 +282,11 @@ class GameMemoramaActivity : AppCompatActivity() {
 
         })
 
-        refTablero.child("botones").addChildEventListener(object: ChildEventListener{
+        refTablero.child("botones").addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                rellenar2(snapshot.value as Int, null)
+                var btnInt = (snapshot.value as Long).toInt()
+
+                rellenar2(null, btnInt)
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -511,11 +521,11 @@ class GameMemoramaActivity : AppCompatActivity() {
             }
 
             for(i in 0..7){
-                refTablero.child("imagenes").child("img"+i).setValue(cards[i])
+                refTablero.child("imagenes").child("img" + i).setValue(cards[i])
             }
 
             for(j in 0..15){
-                refTablero.child("botones").child("btn"+j).setValue(btnImg[j])
+                refTablero.child("botones").child("btn" + j).setValue(btnImg[j])
             }
         }
 
